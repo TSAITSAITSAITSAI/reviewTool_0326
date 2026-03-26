@@ -1,0 +1,146 @@
+{
+  "LayoutType": "Label",
+  "OrderType": "Delivery",
+  "PaperSize": "Label",
+  "fontSize": {"x-large":24,"large":20,"medium":17},
+  "PositionLines": [
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "外送",
+      	  "FontStyle":"Bold",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 65,
+          "alignment": "left"
+        },
+	 {
+          "Formula": "#{DisplayID}",
+	        "FontStyle":"Bold",
+          "fontSizeType": "medium",
+          "x": 66,
+          "y": 0,
+          "width": 95,
+          "alignment": "left"
+        },
+	{
+          "Formula": "{RecipientName}",
+	        "FontStyle":"Bold",
+          "fontSizeType": "medium",
+          "x": 151,
+          "y": 0,
+          "width": 169,
+          "height": 26,
+          "alignment": "right"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Type": "Divider",
+          "FontStyle":"Bold",
+          "Formula": "",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 319,
+          "alignment": "center"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "{ProductName}",
+	        "FontStyle":"Bold",
+          "fontSizeType": "x-large",
+          "x": 0,
+          "y": 0,
+          "width": 319,
+          "height": 42,
+          "alignment": "left"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "{Addition};{ProductRemark}",
+	        "FontStyle":"Bold",
+          "fontSizeType": "large",
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 100,
+          "alignment": "left"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "{SEQ} / {StickerCount}",
+	        "FontStyle":"Bold",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 319,
+          "height": 30,
+          "alignment": "right"
+        }
+      ]
+    },
+   {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+	        "Type": "Divider",
+          "Formula": "",
+	        "FontStyle":"Bold",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 319,
+          "alignment": "center"
+        }
+      ]
+    },   
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "{PrintDatetime}",
+      	  "FontStyle":"Bold",
+          "fontSize": 12,
+          "x": 0,
+          "y": 4,
+          "width": 180,
+          "alignment": "left"
+        },
+	  {
+          "Formula": "${ProductPrice} ",
+	        "FontStyle":"Bold",
+          "fontSizeType": "large",
+          "x": 161,
+          "y": 0,
+          "width": 159,
+          "alignment": "right"
+        }
+      ]
+    }
+  ]
+}

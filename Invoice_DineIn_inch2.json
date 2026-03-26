@@ -1,0 +1,756 @@
+{
+  "LayoutType": "Invoice",
+  "OrderType": "DineIn",
+  "PaperSize": "2inch",
+  "FontSize": {"x-large":28,"large":25,"medium":21},
+  "FontSpecing":5,
+  "PositionLines": [
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "{Provider}",
+	        "FontStyle":"Bold",
+          "fontSizeType": "x-large",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "center"
+        }        
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "#{DisplayID}",
+	        "FontStyle":"Bold",
+          "fontSizeType": "x-large",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "center"
+        }        
+      ]
+    },
+    {
+      "hideCondition": "{FloorName} == '' && {TableName} == ''",
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "區域: {FloorName}",
+	        "FontStyle":"Underline",
+          "fontSizeType": "large",
+          "x": 0,
+          "y": 0,
+          "width": 190,
+          "alignment": "right"
+        },
+        {
+          "Formula": "桌號: {TableName}",
+	  "FontStyle":"Underline",
+          "fontSizeType": "large",
+          "x": 191,
+          "y": 0,
+          "width": 190,
+          "alignment": "left"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "內用結帳單",
+	        "FontStyle":"Bold",
+          "fontSizeType": "large",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "center"
+        }
+      ]
+    },
+   
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "{StoreName}",
+	        "FontStyle":"",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "center"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+	        "Type": "Divider",
+          "Formula": "----------------------------",
+	        "FontStyle":"",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "center"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "單號: {OrderID}",
+	        "FontStyle":"",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 380,
+          "alignment": "left"
+        }        
+      ]
+    },   
+    {
+      "hideCondition": "{InvoiceNumber} == ''",
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "發票: {InvoiceNumber}",
+	        "FontStyle":"",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 380,
+          "alignment": "left"
+        }
+      ]
+    },
+    {
+      "hideCondition": "{UniformNumber} == ''",
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "統編: {UniformNumber}",
+	        "FontStyle":"",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 380,
+          "alignment": "left"
+        }        
+      ]
+    },
+    {
+      "hideCondition": "{CarrierNo} == ''",
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "載具: {CarrierNo}",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 380,
+          "alignment": "left"
+        }
+      ]
+    },
+    {
+      "hideCondition": "{DonationNumber} == ''",
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "愛心碼: {DonationNumber}(發票已捐贈)",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 380,
+          "alignment": "left"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+	        "Type": "Divider",
+          "Formula": "----------------------------",
+	        "FontStyle":"",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "center"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "名稱",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 260,
+          "alignment": "center"
+        },        
+        {
+          "Formula": "數量",
+          "fontSizeType": "medium",
+          "x": 231,
+          "y": 0,
+          "width": 70,
+          "alignment": "center"
+        },
+        {
+          "Formula": "價格",
+          "fontSizeType": "medium",
+          "x": 281,
+          "y": 0,
+          "width": 100,
+          "alignment": "center"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+	        "Type": "Divider",
+          "Formula": "----------------------------",
+	        "FontStyle":"",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "center"
+        }
+      ]
+    },
+    {
+      "category": "Items",
+      "lines": [
+        {
+          "x": 0,
+          "y": 0,
+          "groupID": 1,
+          "step": 1,
+          "blocks": [
+            {
+              "Formula": "{ProductName}",
+              "fontSizeType": "medium",
+              "x": 0,
+              "y": 0,
+              "width": 260,
+              "alignment": "left"
+            },            
+            {
+              "Formula": "{Quantity|}",
+              "fontSizeType": "medium",
+              "x": 231,
+              "y": 0,
+              "width": 60,
+              "alignment": "right"
+            },
+            {
+              "Formula": "{TotalPrice|}",
+              "fontSizeType": "medium",
+              "x": 281,
+              "y": 0,
+              "width": 100,
+              "alignment": "right"
+            }
+          ],
+          "Additions": [
+            {
+              "x": 0,
+              "y": 0,
+              "groupID": 1,
+              "step": 2,
+              "blocks": [
+                {
+                  "Formula": "-{ProductName}",
+                  "fontSizeType": "medium",
+                  "x": 10,
+                  "y": 0,
+                  "width": 250,
+                  "alignment": "left"
+                },                
+                {
+                  "Formula": "{Quantity|}",
+                  "fontSizeType": "medium",
+                  "x": 231,
+                  "y": 0,
+                  "width": 60,
+                  "alignment": "right"
+                },
+                {
+                  "Formula": "{TotalPrice|}",
+                  "fontSizeType": "medium",
+                  "x": 281,
+                  "y": 0,
+                  "width": 100,
+                  "alignment": "right"
+                }
+              ],
+              "Additions": [
+                {
+                  "x": 0,
+                  "y": 0,
+                  "groupID": 1,
+                  "step": 3,
+                  "blocks": [
+                    {
+                      "Formula": "--{ProductName}",
+                      "fontSizeType": "medium",
+                      "x": 20,
+                      "y": 0,
+                      "width": 240,
+                      "alignment": "left"
+                    },                   
+                    {
+                      "Formula": "{Quantity|}",
+                      "fontSizeType": "medium",
+                      "x": 231,
+                      "y": 0,
+                      "width": 60,
+                      "alignment": "right"
+                    },
+                    {
+                      "Formula": "{TotalPrice|}",
+                      "fontSizeType": "medium",
+                      "x": 281,
+                      "y": 0,
+                      "width": 100,
+                      "alignment": "right"
+                    }
+                  ],
+                  "Additions": [
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "groupID": 1,
+                      "step": 4,
+                      "blocks": [
+                        {
+                          "Formula": "---{ProductName}",
+                          "fontSizeType": "medium",
+                          "x": 10,
+                          "y": 0,
+                          "width": 260,
+                          "alignment": "left"
+                        },
+                        {
+                          "Formula": "{Quantity|}",
+                          "fontSizeType": "medium",
+                          "x": 231,
+                          "y": 0,
+                          "width": 60,
+                          "alignment": "right"
+                        },
+                        {
+                          "Formula": "{TotalPrice|}",
+                          "fontSizeType": "medium",
+                          "x": 281,
+                          "y": 0,
+                          "width": 100,
+                          "alignment": "right"
+                        }
+                      ],
+                      "Additions": [
+                        
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "Discounts": [
+            {
+              "x": 0,
+              "y": 0,
+              "blocks": [
+                {
+                  "Formula": "{DiscountRuleName}",
+                  "fontSizeType": "medium",
+                  "x": 0,
+                  "y": 0,
+                  "width": 230,
+                  "alignment": "left"
+                },
+                {
+                  "Formula": "{DiscountAmount}",
+                  "fontSizeType": "medium",
+                  "x": 231,
+                  "y": 0,
+                  "width": 150,
+                  "alignment": "right"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    
+    {
+      "category": "Discounts",
+      "lines": [
+        {
+          "x": 0,
+          "y": 0,
+          "groupID": 2,
+          "step": 1,
+          "blocks": [
+            {
+              "Formula": "{DiscountRuleName}",
+              "fontSizeType": "medium",
+              "x": 0,
+              "y": 0,
+              "width": 200,
+              "alignment": "left"
+            },
+            {
+              "Formula": "{DiscountAmount}",
+              "fontSizeType": "medium",
+              "x": 201,
+              "y": 0,
+              "width": 180,
+              "alignment": "right"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "hideCondition": "{Notes} == ''",
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+	        "Type": "Divider",
+          "Formula": "--------------------------",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "center"
+        }
+      ]
+    },
+    {
+      "hideCondition": "{Notes} == ''",
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "{Notes}",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "left"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+	        "Type": "Divider",
+          "Formula": "-------------",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "center"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "小計",
+          "FontStyle":"Bold",
+          "fontSizeType": "medium",
+          "x": 100,
+          "y": 0,
+          "width": 120,
+          "alignment": "left"
+        },
+        {
+          "Formula": "{SubTotal}",
+          "fontSizeType": "medium",
+          "x": 251,
+          "y": 0,
+          "width": 130,
+          "alignment": "right"
+        }
+      ]
+    },
+    {
+     "hideCondition": "{ServiceCharge} == 0",
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "服務費:",
+          "fontSizeType": "medium",
+          "x": 100,
+          "y": 0,
+          "width": 120,
+          "alignment": "left"
+        },
+        {
+          "Formula": "{ServiceCharge}",
+          "fontSizeType": "medium",
+          "x": 251,
+          "y": 0,
+          "width": 130,
+          "alignment": "right"
+        }
+      ]
+    },
+    {
+     "hideCondition": "{Discount} == 0",
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "折扣:",
+          "fontSizeType": "medium",
+          "x": 100,
+          "y": 0,
+          "width": 120,
+          "alignment": "left"
+        },
+        {
+          "Formula": "{Discount}",
+          "fontSizeType": "medium",
+          "x": 251,
+          "y": 0,
+          "width": 130,
+          "alignment": "right"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+	        "Type": "Divider",
+          "Formula": "----------",
+          "fontSizeType": "medium",
+          "x": 100,
+          "y": 0,
+          "width": 283,
+          "alignment": "right"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "總計",
+          "FontStyle":"Bold",
+          "fontSizeType": "medium",
+          "x": 100,
+          "y": 10,
+          "width": 140,
+          "alignment": "left"
+        },
+        {
+          "Formula": "${TotalAmount}",
+          "fontSizeType": "x-large",
+          "x": 181,
+          "y": 0,
+          "width": 200,
+          "alignment": "right"
+        }
+      ]
+    },
+     {
+      "category": "Payments",
+      "lines": [
+        {
+          "x": 0,
+          "y": 0,          
+          "blocks": [
+            {
+              "Formula": "{Name}",
+              "fontSizeType": "medium",
+              "x": 100,
+              "y": 0,
+              "width": 140,
+              "alignment": "left"
+            },
+            {
+              "Formula": "{Amount}",
+              "fontSizeType": "medium",
+              "x": 181,
+              "y": 0,
+              "width": 200,
+              "alignment": "right"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+	        "Type": "Divider",
+          "Formula": "--------------",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "left"
+        }
+      ]
+    },
+    {
+      "category": "SubItems",
+      "lines": [
+        {
+          "x": 0,
+          "y": 0,
+          "groupID": 2,
+          "step": 1,
+          "blocks": [
+            {
+              "Formula": "{SubItemText}",
+              "fontSizeType": "medium",
+              "x": 0,
+              "y": 0,
+              "width": 140,
+              "alignment": "left"
+            },
+            {
+              "Formula": "{SubItemQuantity}",
+              "fontSizeType": "medium",
+              "x": 141,
+              "y": 0,
+              "width": 80,
+              "alignment": "right"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "hideCondition": "{SubItemAmount} == ''",
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "{SubItemAmount}",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 300,
+          "alignment": "left"
+        }
+      ]
+    },
+    {
+      "category": "Tablewares",
+      "lines": [
+        {
+          "x": 0,
+          "y": 0,
+          "groupID": 2,
+          "step": 1,
+          "blocks": [
+            {
+              "Formula": "{TablewareText}",
+              "fontSizeType": "medium",
+              "x": 0,
+              "y": 0,
+              "width": 140,
+              "alignment": "left"
+            },
+            {
+              "Formula": "{TablewareQuantity}",
+              "fontSizeType": "medium",
+              "x": 141,
+              "y": 0,
+              "width": 80,
+              "alignment": "right"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "{TablewareAmount}",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 300,
+          "alignment": "left"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "點單人員: {EmpName}",          
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "left"
+        }
+      ]
+    },    
+     {
+      "x": 0,
+      "y": 0,
+      "blocks": [        
+        {
+          "Formula": "列印時間: {PrintDatetime}",          
+          "fontSize": 19,
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "left"
+        }
+      ]
+    }    
+  ]
+}

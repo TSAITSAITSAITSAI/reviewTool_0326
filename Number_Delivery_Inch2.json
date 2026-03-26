@@ -1,0 +1,93 @@
+{
+  "LayoutType": "Number",
+  "OrderType": "Delivery",
+  "PaperSize": "2inch",  
+  "FontSize": {"x-large":60,"large":24,"medium":20},
+  "FontSpecing":5,
+  "PositionLines": [
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "{StoreName}",
+          "fontSizeType": "large",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "center"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "取餐單 - 外送",
+          "fontSizeType": "large",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "center"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": " ",
+          "fontSize": 40,
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "center"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "{Provider} #{DisplayID}",
+          "fontSizeType": "x-large",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "center"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": " ",
+          "fontSize": 40,
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "center"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "列印時間:{PrintDatetime}",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "center"
+        }
+      ]
+    }
+  ]
+}

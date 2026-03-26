@@ -1,0 +1,56 @@
+﻿{
+ "DisplayID":"527516",
+ "ID":"SN000000248", 
+ "Type":"DineIn", "Provider":"立客點","stationName":"飲料吧",
+ "Bill":{"SubTotal":"734,772","ServiceCharge":-38,"Discount":-7,"TotalAmount":"734,734","Tax":-38}, 
+ "Payment":{"Type":"街口支付","TransactionCode":"","RedeemAmount":15,"Amount":150},
+ "Invoice":{"InvoiceNumber" : "PX02874567","UniformNumber" : "16622335","CarrierNo" : "/LOD2WE"},
+ "Table":{"FloorName":"1F","TableName":"4A"}, 
+ "Employee":{"StoreName":"專加餐酒館","EmployeeName":"James"},
+ "Footer":{"Notes":"臣亮言:先帝創業未半,而中道崩殂.今天下三分,益州疲弊,此誠危急存亡之秋也"},
+
+ "Items":[{"ProductName":"402義式綜合千層披薩","ProductPrice":139,"Quantity":99,"TotalPrice":"13,761",
+	  "Additions":[
+           {"ProductName":"義式綜合(千層披薩)","ProductPrice":"","Quantity":99,"TotalPrice":""
+	           }],
+        "Discounts":[{"DiscountRuleName":"今日特餐9折","DiscountAmount":"-1,376"}] 
+  }
+,
+  {"ProductName":"205奶香醬烤雞腿","ProductPrice":"28,500","Quantity":1,"TotalPrice":"28,500",
+	  "Additions":[
+           {"ProductName":"奶香醬烤雞腿(焗飯)","ProductPrice":30,"Quantity":1,"TotalPrice":30,
+              "Additions":[{"ProductName":"再加微辣","ProductPrice":"","Quantity":1,"TotalPrice":""}]
+	           }]
+  },
+  {"ProductName":"804D套餐-炸品雙拼+飲品or濃湯","ProductPrice":135,"Quantity":1,"TotalPrice":145,
+	"Additions":[
+           {"ProductName":"626炸品雙拼","ProductPrice":"","Quantity":1,"TotalPrice":""},
+           {"ProductName":"702茉香綠茶(冰飲(L))","ProductPrice":"","Quantity":"1","TotalPrice":10,
+                "Additions":[{"ProductName":"3分糖/微冰/加椰果","ProductPrice":10,"Quantity":1,"TotalPrice":"5"}]                
+	           }]        
+  },
+  {"ProductName":"801A套餐-義式布蕾+飲品or濃湯","ProductPrice":85,"Quantity":1,"TotalPrice":85,
+	"Additions":[
+           {"ProductName":"601義式鮮奶油布蕾","ProductPrice":"","Quantity":1,"TotalPrice":""},
+           {"ProductName":"702茉香綠茶(冰飲(L))","ProductPrice":"","Quantity":1,"TotalPrice":"",
+                "Additions":[{"ProductName":"3分糖/微冰","ProductPrice":"","Quantity":"","TotalPrice":""}]                
+	           }]        
+  },
+  {"ProductName":"702茉香綠茶(冰飲(L))","ProductPrice":50,"Quantity":1,"TotalPrice":50,
+	"Additions":[{"ProductName":"3分糖/微冰","ProductPrice":"","Quantity":1,"TotalPrice":""}]
+  }
+], 
+
+ "Discounts":[{"DiscountRuleName":"生日88折","DiscountAmount":-208}],
+ 
+ "Consumer":{ "Name":"VVIP"},
+ "Buyer":{"Carrier":{"Type":"CellPhone","ID1":"1234-4444-5544-9914","ID2":""}},
+ 
+ "PaymentRecord":{},
+ "Packaging":{},
+ "Pickup":{}
+
+ ,"SubItem":[{"L":3},{"M":1}]
+ ,"Tableware":[{"粗吸管":2},{"細吸管":2},{"叉子":1}]
+ 
+}

@@ -1,0 +1,320 @@
+{
+  "LayoutType": "Kitchen",
+  "OrderType": "DineIn",
+  "PaperSize": "2inch",
+  "FontSize": {"x-large":28,"large":25,"medium":21},
+  "FontSpecing":5,
+  "PositionLines": [
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "{Provider} #{DisplayID}",
+	        "FontStyle":"Bold",
+          "fontSizeType": "x-large",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "center"
+        }        
+      ]
+    },    
+    {
+      "hideCondition": "{FloorName} == '' && {TableName} == ''",
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "區域: {FloorName}",
+          "FontStyle":"Underline",
+          "fontSizeType": "large",
+          "x": 0,
+          "y": 0,
+          "width": 180,
+          "alignment": "right"
+        },
+        {
+          "Formula": "桌號: {TableName}",
+          "FontStyle":"Underline",
+          "fontSizeType": "large",
+          "x": 201,
+          "y": 0,
+          "width": 180,
+          "alignment": "left"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "內用廚房單({stationName})",
+          "FontStyle":"Bold",
+          "fontSizeType": "large",          
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "center"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "{StoreName}",
+	        "FontStyle":"",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "center"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+	        "Type": "Divider",
+          "Formula": "----------------------------",
+      	  "FontStyle":"",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "center"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "單號: {OrderID}",
+          "fontSizeType": "large",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "left"
+        }
+      ]
+    },    
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+	        "Type": "Divider",
+          "Formula": "----------------------------",
+      	  "FontStyle":"",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "center"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "名稱",
+          "fontSizeType": "large",
+          "x": 0,
+          "y": 0,
+          "width": 290,
+          "alignment": "center"
+        },       
+        {
+          "Formula": "數量",
+          "fontSizeType": "large",
+          "x": 281,
+          "y": 0,
+          "width": 99,
+          "alignment": "center"
+        }        
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+	        "Type": "Divider",
+          "Formula": "----------------------------",
+      	  "FontStyle":"",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "center"
+        }
+      ]
+    },
+    {
+      "category": "Items",
+      "lines": [
+        {
+          "x": 0,
+          "y": 0,
+          "groupID": 1,
+          "step": 1,
+          "blocks": [
+            {
+              "Formula": "{ProductName}",
+              "fontSizeType": "medium",
+              "x": 0,
+              "y": 0,
+              "width": 300,
+              "alignment": "left"
+            },           
+            {
+              "Formula": "{Quantity|}",
+              "fontSizeType": "medium",
+              "x": 291,
+              "y": 0,
+              "width": 89,
+              "alignment": "right"
+            }            
+          ],
+          "Additions": [
+            {
+              "x": 0,
+              "y": 0,
+              "groupID": 1,
+              "step": 2,
+              "blocks": [
+                {
+                  "Formula": "-{ProductName}",
+                  "fontSizeType": "medium",
+                  "x": 12,
+                  "y": 0,
+                  "width": 290,
+                  "alignment": "left"
+                },           
+                {
+                  "Formula": "{Quantity|}",
+                  "fontSizeType": "medium",
+                  "x": 291,
+                  "y": 0,
+                  "width": 89,
+                  "alignment": "right"
+                }     
+              ],
+              "Additions": [
+                {
+                  "x": 0,
+                  "y": 0,
+                  "groupID": 1,
+                  "step": 2,
+                  "blocks": [
+                    {
+                      "Formula": "--{ProductName}",
+                      "fontSizeType": "medium",
+                      "x": 16,
+                      "y": 0,
+                      "width": 290,
+                      "alignment": "left"
+                    },           
+                    {
+                      "Formula": "{Quantity|}",
+                      "fontSizeType": "medium",
+                      "x": 291,
+                      "y": 0,
+                      "width": 89,
+                      "alignment": "right"
+                    }     
+                  ]               
+                }
+              ]               
+            }
+          ]         
+        }
+      ]
+    },
+    {
+      "hideCondition": "{Notes} == ''",
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+	        "Type": "Divider",
+          "Formula": "----------------------------",
+      	  "FontStyle":"",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "center"
+        }
+      ]
+    },
+    {
+      "hideCondition": "{Notes} == ''",
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "{Notes}",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "left"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+	        "Type": "Divider",
+          "Formula": "----------------------------",
+      	  "FontStyle":"",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "center"
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [
+        {
+          "Formula": "點單人員: {EmpName}",
+          "fontSizeType": "medium",
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "left"
+        }
+      ]
+    },    
+    {
+      "x": 0,
+      "y": 0,
+      "blocks": [       
+        {
+          "Formula": "列印時間: {PrintDatetime}",
+          "fontSize": 19,
+          "x": 0,
+          "y": 0,
+          "width": 383,
+          "alignment": "left"
+        }
+      ]
+    }
+  ]
+}
