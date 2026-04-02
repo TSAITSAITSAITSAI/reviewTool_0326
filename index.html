@@ -1,1625 +1,214 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-    <title> prototype </title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>北高 360 備戰清單 - Bert 專屬</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .title {
-            cursor: pointer;
-        }
-
-        .resultArea {
-            display: none;
-        }
-
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-            .container > div {
-                flex: 1 1 200px; /* 每個 div 最小 200px，並且可以擴展 */
-                background-color: lightblue;
-                padding: 10px;
-                text-align: left;
-            }
-        /* HTML: <div class="loader"></div> */
-        .loader {
-            width: 8px;
-            aspect-ratio: 1;
-            border-radius: 50%;
-            animation: l5 1s infinite linear alternate;
-        }
-
-        @keyframes l5 {
-            0% {
-                box-shadow: 20px 0 #000, -20px 0 #0002;
-                background: #000
-            }
-
-            33% {
-                box-shadow: 20px 0 #000, -20px 0 #0002;
-                background: #0002
-            }
-
-            66% {
-                box-shadow: 20px 0 #0002,-20px 0 #000;
-                background: #0002
-            }
-
-            100% {
-                box-shadow: 20px 0 #0002,-20px 0 #000;
-                background: #000
-            }
-        }
-
-        .box-2inch {
-            width: 383px;
-            /*height: 36px;*/
-            /*background: orange;*/
-            margin: 0px;
-            display: block;
-            position: relative;
-        }
-
-        .box-3inch {
-            width: 576px;
-            /* width: 400px; */
-            /*height: 36px;*/
-            /*background: orange;*/
-            margin: 0px;
-            display: block;
-            position: relative;
-        }
-
-        .box-inner {
-            position: absolute;
-            /*background-color: lightgray;*/
-            border:1px none; 
-        }
-
-        .middle-line {
-            position: relative;
-            height: 10px; /* 根據需要設定高度 */
-            border: 0px solid #ccc;
-            margin: 0px 0;
-            text-align: center;
-            line-height: 20px;
-        }
-
-        .middle-line::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background-color: black;
-            transform: translateY(-50%);
-            z-index: 1;
-        }
-
-        .numberAlign{
-          text-align: right;
-        }
-
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #0f172a; color: #f1f5f9; }
+        .route-card { background-color: #1e293b; border: 1px solid #334155; transition: all 0.3s ease; }
+        .route-card:hover { border-color: #38bdf8; transform: translateY(-2px); }
+        input[type="checkbox"] { accent-color: #38bdf8; width: 1.5rem; height: 1.5rem; }
+        .difficulty-star { color: #fbbf24; }
+        .boss-bg { background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('https://images.unsplash.com/photo-1474135994674-452ce991eeaf?auto=format&fit=crop&q=80&w=1000'); background-size: cover; background-position: center; }
     </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
-<body>
-    <div class="container">
-        <div>
-            <div class="title"><a href="#" onclick="return false;">Contract</a></div>
-            <textarea id="ContractJson" rows="20" cols="160" style="display:none;">
+<body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Boss Header -->
+        <header class="boss-bg border-2 border-red-900/50 p-8 md:p-12 rounded-3xl shadow-2xl mb-10 text-center relative overflow-hidden">
+            <div class="absolute top-4 right-4 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold animate-pulse">
+                FINAL BOSS: 360KM
+            </div>
+            <h1 class="text-4xl md:text-5xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-red-500 to-purple-600">
+                北高 360 征服之路
+            </h1>
+            <p class="text-gray-300 text-lg mb-8">Bert，這不是一場普通的練習，這是為了擊敗大魔王的修行。</p>
+            
+            <div class="bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/10">
+                <div class="flex justify-between items-end mb-2">
+                    <span class="text-sm font-bold text-sky-400">大魔王血條 (目前準備率)</span>
+                    <span id="progressText" class="text-2xl font-mono text-white">0%</span>
+                </div>
+                <div class="w-full h-4 bg-gray-800 rounded-full overflow-hidden border border-gray-700">
+                    <div id="progressBar" class="h-full bg-gradient-to-r from-sky-500 to-blue-600 shadow-[0_0_15px_rgba(56,189,248,0.5)] transition-all duration-1000" style="width: 0%"></div>
+                </div>
+                <p class="text-xs text-gray-500 mt-3 italic text-left">※ 完成所有練習路線，即可獲得與魔王一戰的資格。</p>
+            </div>
+        </header>
 
-</textarea>
-            <div>
-                <ul>
-                    <li>目前只針對 "Items":[...] ,"Discounts":[...]會延用結構是放在陣列裡,其餘屬性若不需LOOP組合的就攤平至第一層,例如 "Bill":{} 就轉成像 dataJason區塊裡的 "SubTotal":389,"TotalAmount":427,"Tax":38</li>
-                    <li>//待確認:"invoiceNo":"CU48927907", "tranDatetime":"2025-03-07 13:34:49", </li>
-                </ul>
+        <!-- Strategy Summary -->
+        <div class="grid md:grid-cols-3 gap-4 mb-10">
+            <div class="bg-blue-900/20 border border-blue-500/30 p-4 rounded-xl text-center">
+                <div class="text-2xl mb-1">🌬️</div>
+                <div class="text-sm font-bold text-blue-300">風阻抗性</div>
+                <div class="text-xs text-gray-400">適應西濱強風</div>
+            </div>
+            <div class="bg-orange-900/20 border border-orange-500/30 p-4 rounded-xl text-center">
+                <div class="text-2xl mb-1">🍗</div>
+                <div class="text-sm font-bold text-orange-300">補給頻率</div>
+                <div class="text-xs text-gray-400">每小時 40-60g 碳水</div>
+            </div>
+            <div class="bg-purple-900/20 border border-purple-500/30 p-4 rounded-xl text-center">
+                <div class="text-2xl mb-1">🧘</div>
+                <div class="text-sm font-bold text-purple-300">核心穩定</div>
+                <div class="text-xs text-gray-400">降低肩膀與手掌壓力</div>
             </div>
         </div>
 
-        <div>
-            <div class="title"><a href="#">mappingJson</a></div>
-            <textarea id="mappingJson" rows="10" cols="80" style="display:none;">
-{
-"orderType":"orderType","Type":"Type",
-"takeOutNO":"takeOutNO","takeNo":"takeOutNO",
-"orderNo":"orderID","orderID":"orderID",
-"invoiceNo":"invoiceNo",
-"ProductName":"ProductName","ProductPrice":"ProductPrice",
-"Quantity":"Quantity","TotalPrice":"TotalPrice",
-"DiscountRuleName":"DiscountRuleName","DiscountAmount":"DiscountAmount",
-"staff":"staff"
-}
-</textarea>
-        </div>
+        <!-- Tier 1: 基礎修行 (基礎體感) -->
+        <div class="mb-10">
+            <h2 class="text-xl font-bold mb-4 flex items-center text-sky-400">
+                <span class="mr-2">LV 1.</span> 基礎體感修行 <span class="ml-2 text-xs font-normal text-gray-500">適合找回車感</span>
+            </h2>
+            <div class="space-y-4">
+                <div class="route-card p-5 rounded-2xl flex items-center gap-4">
+                    <input type="checkbox" id="r1" class="route-cb" onchange="updateProgress()">
+                    <div class="flex-1">
+                        <label for="r1" class="font-bold text-lg block cursor-pointer">環小台北路線</label>
+                        <p class="text-sm text-gray-400">目的：測試車輛設定（Bike Fit）。如果有手麻或膝蓋痛，這段就要調整好。</p>
+                    </div>
+                    <div class="text-right hidden sm:block">
+                        <span class="text-xs text-gray-500 block mb-1">難度</span>
+                        <div class="difficulty-star">★☆☆☆☆</div>
+                    </div>
+                </div>
 
-        <div>
-            <div class="title"><a href="#">positionJson</a></div>
-            <textarea id="positionJson" rows="10" cols="250" style="display:none;">
-{"OrderTemplate2_2inch_Checkout_DineIn": {
-  "LayoutType": "Order",
-  "OrderType": "DineIn",
-  "PaperSize": "2inch",
-  "Display": "2inch_GroupAdditions",
-  "PositionLines": [
-    {
-      "x": 0,
-      "y": 0,
-      "blocks": [
-        {
-          "Formula": "內用結帳單",
-          "fontSize": 36,
-          "x": 0,
-          "y": 0,
-          "width": 383,
-          "alignment": "center"
-        }
-      ]
-    },
-    {
-      "x": 0,
-      "y": 0,
-      "blocks": [
-        {
-          "Formula": "區域:{Floor}",
-          "fontSize": 16,
-          "x": 0,
-          "y": 0,
-          "width": 180,
-          "alignment": "left"
-        },
-        {
-          "Formula": "桌號:{Table}",
-          "fontSize": 16,
-          "x": 181,
-          "y": 0,
-          "width": 180,
-          "alignment": "center"
-        }
-      ]
-    },
-    {
-      "x": 0,
-      "y": 0,
-      "blocks": [
-        {
-          "Formula": "發票號碼:待確認",
-          "fontSize": 16,
-          "x": 0,
-          "y": 0,
-          "width": 150,
-          "alignment": "left"
-        },
-        {
-          "Formula": "單號:{orderNO}",
-          "fontSize": 16,
-          "x": 151,
-          "y": 0,
-          "width": 130,
-          "alignment": "center"
-        }
-      ]
-    },
-    {
-      "x": 0,
-      "y": 0,
-      "blocks": [
-        {
-          "Formula": "載具號碼: {Carrier.ID1}",
-          "fontSize": 16,
-          "x": 0,
-          "y": 0,
-          "width": 383,
-          "alignment": "left"
-        }
-      ]
-    },
-    {
-      "x": 0,
-      "y": 0,
-      "blocks": [
-        {
-          "Formula": "名稱",
-          "fontSize": 20,
-          "x": 0,
-          "y": 0,
-          "width": 200,
-          "alignment": "left"
-        },
-        {
-          "Formula": "數量",
-          "fontSize": 20,
-          "x": 201,
-          "y": 0,
-          "width": 80,
-          "alignment": "right"
-        },
-        {
-          "Formula": "價格",
-          "fontSize": 20,
-          "x": 281,
-          "y": 0,
-          "width": 100,
-          "alignment": "right"
-        }
-      ]
-    },
-    {
-      "category": "Items",
-      "lines": [
-        {
-          "x": 0,
-          "y": 0,
-          "groupID": 1,
-          "step": 1,
-          "blocks": [
-            {
-              "Formula": "{ProductName}",
-              "fontSize": 16,
-              "x": 0,
-              "y": 0,
-              "width": 200,
-              "alignment": "left"
-            },
-            {
-              "Formula": "{Quantity}",
-              "fontSize": 16,
-              "x": 201,
-              "y": 0,
-              "width": 80,
-              "alignment": "right"
-            },
-            {
-              "Formula": "{TotalPrice}",
-              "fontSize": 16,
-              "x": 281,
-              "y": 0,
-              "width": 100,
-              "alignment": "right"
-            }
-          ],
-          "Additions": [
-            {
-              "x": 0,
-              "y": 0,
-              "groupID": 1,
-              "step": 2,
-              "blocks": [
-                {
-                  "Formula": "-{ProductName}",
-                  "fontSize": 16,
-                  "x": 10,
-                  "y": 0,
-                  "width": 200,
-                  "alignment": "left"
-                },
-                {
-                  "Formula": "{Quantity}",
-                  "fontSize": 16,
-                  "x": 201,
-                  "y": 0,
-                  "width": 80,
-                  "alignment": "right"
-                },
-                {
-                  "Formula": "{TotalPrice}",
-                  "fontSize": 16,
-                  "x": 281,
-                  "y": 0,
-                  "width": 100,
-                  "alignment": "right"
-                }
-              ],
-              "Additions": [
-                {
-                  "x": 0,
-                  "y": 0,
-                  "groupID": 1,
-                  "step": 3,
-                  "blocks": [
-                    {
-                      "Formula": "++{ProductName}",
-                      "fontSize": 16,
-                      "x": 10,
-                      "y": 0,
-                      "width": 200,
-                      "alignment": "left"
-                    },
-                    {
-                      "Formula": "{Quantity}",
-                      "fontSize": 16,
-                      "x": 201,
-                      "y": 0,
-                      "width": 80,
-                      "alignment": "right"
-                    },
-                    {
-                      "Formula": "{TotalPrice}",
-                      "fontSize": 16,
-                      "x": 281,
-                      "y": 0,
-                      "width": 100,
-                      "alignment": "right"
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "Discounts": [
-            {
-              "x": 0,
-              "y": 0,
-              "blocks": [
-                {
-                  "Formula": "*****{DiscountRuleName}",
-                  "fontSize": 16,
-                  "x": 10,
-                  "y": 0,
-                  "width": 250,
-                  "alignment": "left"
-                },
-                {
-                  "Formula": "{DiscountAmount}",
-                  "fontSize": 16,
-                  "x": 281,
-                  "y": 0,
-                  "width": 100,
-                  "alignment": "right"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "x": 0,
-      "y": 0,
-      "blocks": [
-        {
-          "Formula": "--------------------------",
-          "fontSize": 12,
-          "x": 0,
-          "y": 0,
-          "width": 383,
-          "alignment": "center"
-        }
-      ]
-    },
-    {
-      "category": "Discounts",
-      "lines": [
-        {
-          "x": 0,
-          "y": 0,
-          "groupID": 2,
-          "step": 1,
-          "blocks": [
-            {
-              "Formula": "{DiscountRuleName}",
-              "fontSize": 16,
-              "x": 0,
-              "y": 0,
-              "width": 180,
-              "alignment": "left"
-            },
-            {
-              "Formula": "{DiscountAmount}",
-              "fontSize": 16,
-              "x": 181,
-              "y": 0,
-              "width": 180,
-              "alignment": "right"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "x": 0,
-      "y": 0,
-      "blocks": [
-        {
-          "Formula": "--------------------------",
-          "fontSize": 12,
-          "x": 0,
-          "y": 0,
-          "width": 383,
-          "alignment": "center"
-        }
-      ]
-    },
-    {
-      "x": 0,
-      "y": 0,
-      "blocks": [
-        {
-          "Formula": "小計:",
-          "fontSize": 16,
-          "x": 0,
-          "y": 0,
-          "width": 180,
-          "alignment": "right"
-        },
-        {
-          "Formula": "{subTotal}",
-          "fontSize": 16,
-          "x": 181,
-          "y": 0,
-          "width": 180,
-          "alignment": "right"
-        }
-      ]
-    },
-    {
-      "x": 0,
-      "y": 0,
-      "blocks": [
-        {
-          "Formula": "保護費用:",
-          "fontSize": 16,
-          "x": 0,
-          "y": 0,
-          "width": 180,
-          "alignment": "right"
-        },
-        {
-          "Formula": "{tax}",
-          "fontSize": 16,
-          "x": 181,
-          "y": 0,
-          "width": 180,
-          "alignment": "right"
-        }
-      ]
-    },
-    {
-      "x": 0,
-      "y": 0,
-      "blocks": [
-        {
-          "Formula": "--------------------------",
-          "fontSize": 12,
-          "x": 0,
-          "y": 0,
-          "width": 383,
-          "alignment": "center"
-        }
-      ]
-    },
-    {
-      "x": 0,
-      "y": 0,
-      "blocks": [
-        {
-          "Formula": "總計:",
-          "fontSize": 16,
-          "x": 0,
-          "y": 0,
-          "width": 180,
-          "alignment": "right"
-        },
-        {
-          "Formula": "{amount}",
-          "fontSize": 16,
-          "x": 181,
-          "y": 0,
-          "width": 180,
-          "alignment": "right"
-        }
-      ]
-    },
-    {
-      "x": 0,
-      "y": 0,
-      "blocks": [
-        {
-          "Formula": "--------------------------",
-          "fontSize": 12,
-          "x": 0,
-          "y": 0,
-          "width": 383,
-          "alignment": "center"
-        }
-      ]
-    },
-    {
-      "x": 0,
-      "y": 0,
-      "blocks": [
-        {
-          "Formula": "付款方式",
-          "fontSize": 16,
-          "x": 0,
-          "y": 0,
-          "width": 160,
-          "alignment": "center"
-        },
-        {
-          "Formula": "{payment}",
-          "fontSize": 16,
-          "x": 161,
-          "y": 0,
-          "width": 100,
-          "alignment": "right"
-        },
-        {
-          "Formula": "{amount}",
-          "fontSize": 16,
-          "x": 261,
-          "y": 0,
-          "width": 120,
-          "alignment": "right"
-        }
-      ]
-    }
-  ]
-}
-</textarea>
-        </div>
-    </div>
-
-    <div>
-        <hr />
-        <div>
-            <div id="controlArea" style="float:left;width:550px;">
-                <select id="ddlPrintCategory" class="ddl">
-                    <option value="Checkout">結帳單(Checkout)</option>
-                    <option value="Overview">總單|控菜單(Overview)</option>
-                    <option value="Kitchen">廚房單(Kitchen)</option>
-                    <option value="Label" disabled="disabled">標籤貼紙(Label)</option>
-                </select>
-                <select id="ddlOrderType" class="ddl">
-                    <option value="DineIn">DineIn(內用)</option>
-                    <option value="TakeOut">TakeOut(外帶)</option>
-                    <option value="Delivery">Delivery(外送)</option>
-                </select>
-                <button id="btnParse">parse</button>
-                <button id="btnCapture">Capture</button>
-                <input type="checkbox" id="isShowDashed"><label for="isShowDashed">顯示框虛線</label>
-                <div style="width:20pt">last</div>
-                
-            </div>
-            <div id="lbLoading" class="loader" style="float:left;display:block;"></div>
-            <div class="loader" style="float:left;display:block;"></div>
-            <div style="clear: both"></div>
-        </div>
-
-        <div>
-            <div class="title"><a href="#">dataJson</a></div>
-            <textarea id="dataJson" rows="10" cols="250" class="resultArea">
-            </textarea>
-        </div>
-
-        <div>
-            <div class="title"><a href="#" onclick="return false;">resultJson|</a></div>
-            <textarea id="jsonOutput" rows="10" cols="500" class="resultArea"></textarea>
-        </div>
-        <div>
-            <div class="title"><a href="#">組成c#語法字串</a></div>
-            <div class="resultArea" style="margin-left:10px;">
-                <div class="title"><a href="#" onclick="return false;">2inch</a></div>
-                <textarea id="cOutput_2inch" rows="20" cols="500"></textarea>
-                <div class="title"><a href="#" onclick="return false;">3inch</a></div>
-                <textarea id="cOutput_3inch" rows="20" cols="500"></textarea>
+                <div class="route-card p-5 rounded-2xl flex items-center gap-4">
+                    <input type="checkbox" id="r5" class="route-cb" onchange="updateProgress()">
+                    <div class="flex-1">
+                        <label for="r5" class="font-bold text-lg block cursor-pointer">鶯歌吃早餐路線</label>
+                        <p class="text-sm text-gray-400">目的：練習長途之後的「恢復感」。學習在微累的情況下維持踏頻。</p>
+                    </div>
+                    <div class="text-right hidden sm:block">
+                        <span class="text-xs text-gray-500 block mb-1">難度</span>
+                        <div class="difficulty-star">★☆☆☆☆</div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div>
-            <div class="title"><a href="#" onclick="return false;">HTML Review</a></div>
-            <table style="width:100%;">
-                <tr>
-                    <td style="display:block;">
-                        <div>
-                            2inch(383px)
-                            <div id="HtmlOutput_2inch" class="2inch" style="border:1px solid black;width:383px;"></div>
-                            <div style="clear: both"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div style="width: 600px;float: left;">
-                            3inch(576px)
-                            <div id="HtmlOutput_3inch" class="3inch" style="border:1px solid black;width:576px;padding:10px;"></div>
-                            <div style="clear: both"></div>
-                        </div>
-                        <div style="margin-top:50px;">點選區塊的設定資訊
-                          <div >
-                            <div style="float: left;width:200px;">                               
-                              <div style="float:left;width:80px;display:none;">FontSize: </div>
-                                      <input type="number" class="numberAlign" style="width:80px;display:none;" id="modifyBlockFontSize" readonly="true">
-                                <div style="float:left;width:80px;">left: </div>
-                                      <input type="number" class="numberAlign" style="width:80px;" id="modifyBlockLeft">
-                                <div style="float: left;width:80px;">width: </div> 
-                                      <input type="number" class="numberAlign" style="width:80px;" id="modifyBlockWidth">
-                                <div style="float: left;width:80px;">align: </div> 
-                                      <select id="modifyBlockAlign" style="width:80px;">
-                                        <option value=""></option>
-                                        <option value="left">left</option>
-                                        <option value="center">center</option>
-                                        <option value="right">right</option>
-                                      </select>
 
-                                <div style="float: left;width:80px;">粗體:</div> 
-                                <input type="checkbox" style="width:80px;text-align: left;" id="modifyBlockIsBold">                                
-                                <div style="float:left;width:160px;text-align: left;">字體大小是用 px設定,但在HTML會轉用pt呈現,這樣才會接近bitMap的排版</div> 
-                            </div>
-                            
-                          </div>
-                          </div>
-                    </td>
-                    <td>
-                        
-                    </td> 
-                </tr>
-            </table>
+        <!-- Tier 2: 進階試煉 (肌耐力與心肺) -->
+        <div class="mb-10">
+            <h2 class="text-xl font-bold mb-4 flex items-center text-emerald-400">
+                <span class="mr-2">LV 2.</span> 進階耐力試煉 <span class="ml-2 text-xs font-normal text-gray-500">強化核心與大腿</span>
+            </h2>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="route-card p-5 rounded-2xl flex flex-col justify-between border-l-4 border-emerald-500">
+                    <div class="flex items-start gap-4 mb-4">
+                        <input type="checkbox" id="r2" class="route-cb" onchange="updateProgress()">
+                        <label for="r2" class="font-bold cursor-pointer">平溪路線 (106縣道)</label>
+                    </div>
+                    <p class="text-xs text-gray-400 italic">對抗北高：雖然北高平坦，但長緩坡練習能大幅提升踏踏效能。</p>
+                </div>
+
+                <div class="route-card p-5 rounded-2xl flex flex-col justify-between border-l-4 border-emerald-500">
+                    <div class="flex items-start gap-4 mb-4">
+                        <input type="checkbox" id="r3" class="route-cb" onchange="updateProgress()">
+                        <label for="r3" class="font-bold cursor-pointer">烏來路線</label>
+                    </div>
+                    <p class="text-xs text-gray-400 italic">對抗北高：練習「定速巡航」的概念，在爬坡時不爆心跳。</p>
+                </div>
+
+                <div class="route-card p-5 rounded-2xl flex flex-col justify-between border-l-4 border-emerald-500">
+                    <div class="flex items-start gap-4 mb-4">
+                        <input type="checkbox" id="r4" class="route-cb" onchange="updateProgress()">
+                        <label for="r4" class="font-bold cursor-pointer">三峽路線</label>
+                    </div>
+                    <p class="text-xs text-gray-400 italic">對抗北高：丘陵地的起伏節奏切換，預防最後 50km 抽筋。</p>
+                </div>
+
+                <div class="route-card p-5 rounded-2xl flex flex-col justify-between border-l-4 border-emerald-500">
+                    <div class="flex items-start gap-4 mb-4">
+                        <input type="checkbox" id="r8" class="route-cb" onchange="updateProgress()">
+                        <label for="r8" class="font-bold cursor-pointer">大溪路線</label>
+                    </div>
+                    <p class="text-xs text-gray-400 italic">對抗北高：長距離平坦公路練習，這是最接近西濱體感的路線。</p>
+                </div>
+            </div>
         </div>
+
+        <!-- Tier 3: 終極挑戰 (大魔王模擬) -->
+        <div class="mb-12">
+            <h2 class="text-xl font-bold mb-4 flex items-center text-red-500">
+                <span class="mr-2">LV 3.</span> 終極魔王模擬 <span class="ml-2 text-xs font-normal text-gray-500">正式挑戰前的生死戰</span>
+            </h2>
+            <div class="space-y-4">
+                <div class="route-card p-6 rounded-2xl border-2 border-red-500/30 bg-red-900/10 shadow-[0_0_20px_rgba(239,68,68,0.1)]">
+                    <div class="flex items-center gap-4 mb-2">
+                        <input type="checkbox" id="r7" class="route-cb w-8 h-8" onchange="updateProgress()">
+                        <label for="r7" class="font-bold text-xl text-red-400 cursor-pointer">基隆北海岸 (必練之最)</label>
+                    </div>
+                    <p class="text-gray-300 text-sm mb-4">這條路線的「側風」與「東北季風」是北高魔王最常用的技能。如果你能在那裡維持 28km/h，你就能在北高完賽。</p>
+                    <div class="flex gap-2">
+                        <span class="px-2 py-1 bg-red-600/20 text-red-400 text-[10px] rounded border border-red-500/40 uppercase">風阻適應</span>
+                        <span class="px-2 py-1 bg-red-600/20 text-red-400 text-[10px] rounded border border-red-500/40 uppercase">心靈洗禮</span>
+                    </div>
+                </div>
+
+                <div class="route-card p-6 rounded-2xl border-2 border-purple-500/30 bg-purple-900/10 shadow-[0_0_20px_rgba(168,85,247,0.1)]">
+                    <div class="flex items-center gap-4 mb-2">
+                        <input type="checkbox" id="r6" class="route-cb w-8 h-8" onchange="updateProgress()">
+                        <label for="r6" class="font-bold text-xl text-purple-400 cursor-pointer">石門水庫 (耐力極限)</label>
+                    </div>
+                    <p class="text-gray-300 text-sm mb-4">長里程加上最後的爬升，模擬北高第 250 公里（嘉義台南段）的疲累感。測試你的補給是否能撐住你的體能。</p>
+                    <div class="flex gap-2">
+                        <span class="px-2 py-1 bg-purple-600/20 text-purple-400 text-[10px] rounded border border-purple-500/40 uppercase">耐力爆發</span>
+                        <span class="px-2 py-1 bg-purple-600/20 text-purple-400 text-[10px] rounded border border-purple-500/40 uppercase">補給測試</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Survival Tips -->
+        <div class="bg-gray-800 p-8 rounded-3xl border border-gray-700">
+            <h2 class="text-xl font-bold mb-6 flex items-center text-yellow-500 italic">
+                SECRET TIPS FOR BERT
+            </h2>
+            <div class="grid sm:grid-cols-2 gap-6">
+                <div class="flex gap-4">
+                    <div class="text-2xl">⚡</div>
+                    <div>
+                        <p class="font-bold text-sm">魔王的弱點：順風</p>
+                        <p class="text-xs text-gray-400 leading-relaxed">北高看天騎車。如果東北季風強勁，魔王血量直接減半。但千萬別因為順風就過度踩踏，膝蓋會爆。</p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="text-2xl">🧊</div>
+                    <div>
+                        <p class="font-bold text-sm">最強回血劑：便利商店</p>
+                        <p class="text-xs text-gray-400 leading-relaxed">在北高路上，每一間全家都是存檔點。建議喝罐冰可樂或冰美式，對於心理與神經的提振非常有效。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-16 pb-12 text-center">
+            <p class="text-gray-600 text-xs tracking-widest uppercase">Bert, We believe in you. Conquer the 360.</p>
+        </footer>
     </div>
 
     <script>
-
-
-      //global var
-      var gLayoutConfig={};
-      var gselectDiv;
-
-        $(document).ready(function () {
-            $(".ddl").on("change", function () {
-                $("#btnParse").click();
-            });
-
-            $("#btnParse").on("click", function () {
-                var _printCategory = $("#ddlPrintCategory").val();
-                var _orderType = $("#ddlOrderType").val();
-                showLayoutPriview(_printCategory, _orderType);
-                
-                setTimeout(function () {
-                    toggleBorderStyle(true);
-                }, 500);
-            });            
-
-            $(".title").on("click", function () {
-                var _this = $(this);
-                _this.next().toggle("fast");
-
-                //-----------------
-                log("value:" + _this.text())
-                log("left:" + _this.css("left"));
-                log("width:" + _this.css("width"));
-                log("font-size:" + _this.css("font-size"));
-                log("text-align:" + _this.css("text-align"));                
-            });           
-
-            $(".loader").on("click", function () {
-                var _this = $(this);
-                //-----------------
-                log("value:" + _this.text())
-                log("left:" + _this.css("left"));
-                log("width:" + _this.css("width"));
-                log("font-size:" + _this.css("font-size"));
-                log("text-align:" + _this.css("text-align"));
-            });           
-
-            $("#isShowDashed").on("click",function(){
-                toggleBorderStyle();
-            });
-
-            //Block event setting
-            blockEventSetting();
-                       
-            //---------------------------------------
-
-            init();           
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.route-cb');
+            const checked = document.querySelectorAll('.route-cb:checked');
+            const percent = (checked.length / checkboxes.length) * 100;
             
-        });
-
-        function toggleBorderStyle(isShow){
-             var _borderStyle=$(".box-inner").css("border-style");              
-
-              if(isShow != undefined && isShow==true){
-                _borderStyle ='dashed';
-              }else{
-                _borderStyle =(_borderStyle=='dashed'? 'none':'dashed');              
-              }
-              $(".box-inner").css("border-style",_borderStyle);
-
-              if(_borderStyle=='dashed'){
-                $("#isShowDashed").prop("checked",true);
-              }
-        }
-
-        
-        function init(){                   
-          var _contractJsonFileName = "contract.json";         
-
-          let _contract = $.getJSON(_contractJsonFileName);
-
-          _contract.done(function(data) {
-              let jsonText = JSON.stringify(data);
-              $("#ContractJson").val(jsonText);
-
-              $("#btnParse").click();
-              
-          });
-        }
-
-        function blockEventSetting(){
-          $("#modifyBlockLeft").on("input",function(){
-              let value = $(this).val();
-              //console.log("數字即時變更為：", value);
-              gselectDiv.css("left",value);
-            });
-
-            $("#modifyBlockWidth").on("input",function(){
-              let value = $(this).val();
-              //console.log("數字即時變更為：", value);
-              gselectDiv.css("width",value);
-            });
-
-            $("#modifyBlockAlign").on("input",function(){
-              let value = $(this).val();
-              gselectDiv.css("text-align",value);
-            });
-
-              $("#modifyBlockIsBold").on("click",function(){
-              let value = $(this).prop("checked");
-              var _boldVal="normal"
-              if(value){
-                _boldVal="bold"
-              }
-
-              gselectDiv.css("font-weight",_boldVal);
-            });
-
-        }
-
-        async function showLayoutPriview(printCategory, orderType) {
-            var _this = $(this);
-            var _lbLoading = $("#lbLoading");
-            _this.attr("disabled", true);
-            _lbLoading.show();
-            $("#dataJson").val("");
-            $('#jsonOutput').empty().val("");
-            $('#cOutput').empty().val("");
-
-            //var _printCategory = $("#ddlPrintCategory").val();
-            //var _orderType = $("#ddlOrderType").val();
-            var _printCategory = printCategory;
-            var _orderType = orderType;
-            //-------------------------------------------------------
-            var _dataStr_2inch = await buildPrintJson("inch2", _printCategory, _orderType)
-            var _datajson_2inch = JSON.parse(_dataStr_2inch);
-
-            if (_datajson_2inch["status"] == "success") {
-                var _resultLines_2inch = transformDataToText(_datajson_2inch["data"]);
-                $('#cOutput_2inch').val(_resultLines_2inch);
-                $('#HtmlOutput_2inch').html(transformDataToHtml("2inch", _datajson_2inch["data"]));
-                $("#HtmlOutput_2inch .box-inner").on("click", function(){
-                  var _this = $(this);
-                    showBlockInfo(_this);
-
-                     //taggle click lineblock
-                    var _isClick=_this.data("isClick");                    
-                    log(_isClick);
-                    $("#HtmlOutput_2inch .box-inner").css("background","").not(_this).data("isClick",false)
-                    
-                    _this.css("background-color","lightblue");
-                    _this.data("isClick",true);
-
-                });
-            } else {
-                $('#HtmlOutput_2inch').html(_datajson_2inch["data"]);
-            }
-
-            //--------------------------------------
-
-            var _dataStr_3inch = await buildPrintJson("inch3", _printCategory, _orderType)
-            var _datajson_3inch = JSON.parse(_dataStr_3inch);
-            $('#jsonOutput').val(_dataStr_3inch);
-
-            if (_datajson_3inch["status"] == "success") {
-                var _resultLines_3inch = transformDataToText(_datajson_3inch["data"]);
-                $('#cOutput_3inch').val(_resultLines_3inch);
-                $('#HtmlOutput_3inch').html(transformDataToHtml("3inch",_datajson_3inch["data"]));
-                $("#HtmlOutput_3inch .box-inner").on("click", function () {
-                    var _this = $(this);
-                    showBlockInfo(_this);
-                    // log("value:" + _this.text())
-                    // log(" left:" + _this.css("left"));
-                    // log(" width:" + _this.css("width"));
-                    // log(" font-size:" + _this.css("font-size"));
-                    // log(" text-align:" + _this.css("text-align"));
-
-                    //taggle click lineblock
-                    var _isClick=_this.data("isClick");                    
-                    log(_isClick);
-                    $("#HtmlOutput_3inch .box-inner").css("background","").not(_this).data("isClick",false)
-                    
-                    //if(_isClick == false || _isClick==undefined){
-                      _this.css("background-color","lightblue");
-                      _this.data("isClick",true);
-                    //}
-                });
-            } else {
-                $('#HtmlOutput_3inch').html(_datajson_3inch["data"]);
-            }
-
-            _lbLoading.hide();
-            _this.attr("disabled", false);
-            //setTimeout(function () {}, 500);
-
-        }
-
-        //回傳layout合併後的JSON:指定 列印紙張規格,單據樣式類別(printCategory=Checkout|Summary|Kitchen|Label)
-        async function buildPrintJson(paperSize, printCategory, orderType) {
-            var _layoutJsonFileName = printCategory + "_" + orderType + "_" + paperSize + ".json?"+ Date.now();;
-            log(_layoutJsonFileName);
-            //---------------------------
-            var _contractJsonStr = $("#ContractJson").val();
-            var _datajson=getDataJsonByCategory(_contractJsonStr, printCategory);
-            //---------------------------
-            $("#dataJson").val(JSON.stringify(_datajson));
-
-            try {
-                const _layoutJson = await $.getJSON(_layoutJsonFileName);
-                if (_layoutJson.hasOwnProperty("LayoutType") == false) {
-                    var _msg = "無此layout設定值:" + _layoutJsonFileName;
-                    _result = "{\"status\":\"fail\",\"data\":\"" + _msg + "\"}";
-                } else {
-                    //log(_data);  // 輸出 JSON 內容
-                    _result = showLayoutResult(_layoutJson, _datajson);
-                }
-
-                return _result;
-            }
-            catch (error) {
-                console.log('Error loading JSON file:', error);
-                var _msg = "無此layout設定值:" + _layoutJsonFileName;
-                _result = "{\"status\":\"fail\",\"data\":\"" + _msg + "\"}";
-                return _result;
-            }
-
-        }
-
-        //產出單據資料: 合併dataJsonStr & positionJsonStr
-        function showLayoutResult(layoutJson, dataJson) {
-
-            try {
-                var _dataJson = dataJson;
-                var _buildArr = []
-                var _positionJson = layoutJson;
-                //var _positionJson = JSON.parse($("#positionJson").val());
-                //------------------------------
-                //合併: dataJsonStr & positionJsonStr
-                // 以 position 為主
-                var _configFontSize = _positionJson["FontSize"];                
-                var _configFontSpecing = _positionJson["FontSpecing"];
-                var _positionLines = _positionJson["PositionLines"];
-                var _tmpPosition;
-
-                //為了方便使用,放到全域變數
-                gLayoutConfig["FontSize"]=_configFontSize
-                gLayoutConfig["FontSpecing"]=_configFontSpecing                
-
-                //組合資料(dataJson+positionJson):需一併把值加上,不然有些屬性名稱是相同時,會不知要取哪個值來置換
-                //組成預期結果(_buildArr+mappingJson)
-
-                var _tmpGroupID = ""
-                var _tmpLineObj;
-                var _tmpBlockObj;
-                var _tmpBlock;
-
-                for (let i = 0; i < _positionLines.length; i++) {
-                    _tmpPosition = _positionLines[i]
-
-                    //在 positionJson 裡, 新增屬性: category 來對應 Contract , 如 category:Items | category:Discounts
-                    //  陣列名都是用 "lines":[...]
-
-                    //if (_tmpPosition.hasOwnProperty("lines") == true && _tmpPosition["lines"].length > 0) {
-                    if (_tmpPosition.hasOwnProperty("category") == true && _tmpPosition["lines"].length > 0) {
-                        log(_tmpPosition["lines"].length);
-                        //log(_tmpPosition["lines"]);
-                        //log(_dataJson["items"]);
-
-                        _category = _tmpPosition["category"]
-                        switch (_category) {
-                            case "Items": // OrderItem 的 Discounts 跟Additions同一層,會依序處理
-                                //把整個資料丟到外面去組合
-                                _buildArr = buildBlockRecursion(_buildArr, _tmpPosition["lines"], _dataJson["Items"], _configFontSize);
-                                break;
-
-                            case "Discounts": //整單折扣就是一階陣列,先不重構程式 buildBlockRecursion()
-                                for (var _item in _dataJson[_category]) {
-                                    tmpItem = _dataJson[_category][_item]
-
-                                    for (let j = 0; j < _tmpPosition["lines"].length; j++) {
-                                        _tmpsubPosition = _tmpPosition["lines"][j];
-                                        _tmpLineObj = getorgBlockObj(_tmpsubPosition)
-                                        for (var _block in _tmpsubPosition["blocks"]) {
-                                            _tmpBlock = _tmpsubPosition["blocks"][_block];
-                                            _tmpBlockObj = getBlockInfo(tmpItem, _tmpBlock,_configFontSize);
-                                            _tmpLineObj.blocks.push(_tmpBlockObj);
-                                        }
-
-                                        _buildArr.push(JSON.stringify(_tmpLineObj));
-                                    }
-                                }
-                                break;
-                            default:
-                        }
-
-                    } else {
-                        //組一般狀況時
-                        _tmpLineObj = getorgBlockObj(_tmpPosition)
-                        for (var _block in _tmpPosition["blocks"]) {
-                            _tmpBlock = _tmpPosition["blocks"][_block];
-                            _tmpBlockObj = getBlockInfo(_dataJson, _tmpBlock, _configFontSize);
-                            _tmpLineObj.blocks.push(_tmpBlockObj);
-                        }
-
-                        _buildArr.push(JSON.stringify(_tmpLineObj));
-                    }
-                }
-
-                _result = "{\"status\":\"success\",\"data\":[" + _buildArr.join(",") + "]}";
-
-                //------------------------------
-                //console.log(_result);
-
-                return _result;
-
-            } catch (e) {
-                // 如果解析錯誤，顯示錯誤訊息
-                showErrMsg(e);
-                _result = "{\"status\":\"fail\",\"data\":\"" + e + "\"}";
-
-                return _result;
-
-            }
-        }
-
-        //群組資料的加工處理,子層(判斷 [].length>0==true)的loop
-        function buildBlockRecursion(buildArr, positionLines, dataItemsJsonObject,configFontSize) {
-            var _buildArr = buildArr
-            var _positionLines = positionLines;
-            var _dataItems = dataItemsJsonObject;
-            var _tmpLine;
-            var _tmpDataItem;
-
-            try {
-
-                for (let j = 0; j < _dataItems.length; j++) {
-                    _tmpDataItem = _dataItems[j];
-                    //----------------------------------------------------
-                    for (var _line in _positionLines) {
-                        _tmpLine = _positionLines[_line];
-                        //就算有子層,因為line的關係,也是先加入後再疊加子層
-                        _tmpLineObj = getorgBlockObj(_tmpLine)
-                        for (var _block in _tmpLine["blocks"]) {
-                            _tmpBlock = _tmpLine["blocks"][_block];
-                            _tmpBlockObj = getBlockInfo(_tmpDataItem, _tmpBlock,configFontSize);
-                            _tmpLineObj.blocks.push(_tmpBlockObj);
-                        }
-                        _buildArr.push(JSON.stringify(_tmpLineObj));
-                    }
-                    //----------------------------------------------------
-                    //疊加子層:判斷 position.additions.length >0 && data.additions.length >0 才執行遞迴
-                    _mapKeyword = "Additions"
-                    if (_tmpLine.hasOwnProperty(_mapKeyword) == true && _tmpDataItem.hasOwnProperty(_mapKeyword) == true) {
-                        for (var _block in _tmpLine[_mapKeyword]) {
-                            _buildArr = buildBlockRecursion(_buildArr, _tmpLine[_mapKeyword], _tmpDataItem[_mapKeyword],configFontSize);
-                            break;
-                        }
-                    }
-                    _mapKeyword = "Discounts"
-                    if (_tmpLine.hasOwnProperty(_mapKeyword) == true && _tmpDataItem.hasOwnProperty(_mapKeyword) == true) {
-                        log(_positionLines)
-                        log(_tmpDataItem[_mapKeyword])
-                        for (var _block in _tmpLine[_mapKeyword]) {
-                            _buildArr = buildBlockRecursion(_buildArr, _tmpLine[_mapKeyword], _tmpDataItem[_mapKeyword],configFontSize);
-                            break;
-                        }
-                    }
-                }
-                return _buildArr;
-            }
-            catch (e) {
-                showErrMsg(e);
-
-            }
-        }
-
-        function displayJson(obj) {
-            var _resultArr = []
-
-            // 如果是陣列
-            if (Array.isArray(obj) == true) {
-                for (var _Item in obj) {
-                    _resultArr.push(displayJson(obj[_Item]));
-                }
-            } else {
-                if (typeof obj === 'object' && obj !== null) {
-                    for (var key in obj) {
-                        if (obj.hasOwnProperty(key)) {
-                            var value = obj[key];
-                            if (Array.isArray(value) == true) {
-                                _resultArr.push(displayJson(value));
-                            } else {
-                                var _aliasKey = mappingName(key)
-                                _resultArr.push(_aliasKey + ":" + value);
-                            }
-                        }
-                        //_resultArr.push(key + ":" + value);
-                        //console.log(key, ":", _aliasKey, typeof obj);
-                    }
-                }
-            }
-            return _resultArr.join("\n")
-        }
-
-        function mappingName(sourceName) {
-            var _result = "";
-            var _jsonStr = $("#mappingJson").val();
-            var jsonObject = JSON.parse(_jsonStr);
-
-            try {
-                _result = sourceName;
-                if (jsonObject.hasOwnProperty(sourceName)) {
-                    _result = jsonObject[sourceName];
-                }
-
-            } catch (e) {
-                showErrMsg(e);
-                console.log(e);
-            }
-
-            return _result;
-        }
-
-        function getBlockInfo(datajsonObject, _block,configFontSize) {
-            var _orgBlock = { "desc": "", "fontSize": 0, "x": 0, "y": 0, 
-            "width": 0, "alignment": "center" };
-            var _tmpBlockObj;
-            var _tmpBlock;
-            var _replaceKeyword = "{}";
-            var _desc = "";
-            var _formula = "";
-            var _code = "";
-
-            _tmpBlockObj = jQuery.extend(true, {}, _orgBlock)
-            _tmpBlock = _block;
-
-            _tmpBlockObj.Type = _tmpBlock["Type"];
-            _tmpBlockObj.FontStyle = _tmpBlock["FontStyle"];
-            _tmpBlockObj.x = _tmpBlock["x"];
-            _tmpBlockObj.y = _tmpBlock["y"];
-            _tmpBlockObj.width = _tmpBlock["width"];
-            //字型大小用表頭的變數代替
-            if(_tmpBlock.fontSize){
-              _tmpBlockObj.fontSize = _tmpBlock["fontSize"];
-            }else{
-              _tmpBlockObj.fontSize = configFontSize[_tmpBlock["fontSizeType"]];
-            }
-            _tmpBlockObj.alignment = _tmpBlock["alignment"];
-
-            //套公式,找出{...}裡的對應值再放回去
-            _formula = _tmpBlock["Formula"];
-            _desc = _formula
-            _hasBraces = /\{.*\}/.test(_formula);
-
-            if (_hasBraces) {
-                // 使用 replace + 正規表達式 + callback 處理所有符合的 {...}
-                _desc = _formula.replace(/\{(.*?)\}/g, function (match, code) {
-                    let _defaultVal= "";
-                    if(code.indexOf("|")>0){
-                      var tmpArr=code.split("|");
-                      _defaultVal=tmpArr[1]
-                      code=tmpArr[0];
-                    }
-                    
-                    let _mappingName = mappingName(code);
-                    let _getValue;
-
-                    if (datajsonObject.hasOwnProperty(_mappingName)) {
-                        _getValue = datajsonObject[_mappingName];
-                    } else {
-                        //_getValue = _mappingName; // 找不到就保留 mappingName
-                        _getValue = _defaultVal; // 找不到就保留 mappingName
-                    }
-
-                    return _getValue;
-                });
-            }
-
-            /*
-            if (_hasBraces) {
-                //會有多個 {} 嗎? 先不設想,但若真有多個時就折分成多個block
-                //取得{}裡的值當_code
-                _productNameMatch = _formula.match(/\{(.*?)\}/);
-                _code = _productNameMatch[1]
-                _replaceKeyword = "{" + _code + "}"
-                _mappingName = mappingName(_code);
-                //console.log(_code, ":", _mappingName);
-                if (datajsonObject.hasOwnProperty(_mappingName)) {
-                    _getValue = datajsonObject[_mappingName];
-                    //console.log(datajsonObject);
-                } else {
-                    _getValue = _mappingName
-                }
-                //console.log("replaceKeyword:", _replaceKeyword)
-                //從 Formula 裡,置換keyword為指定的mapping值
-                _desc = _formula.replace(_replaceKeyword, _getValue);;
-            }
-            */
-            _tmpBlockObj.desc = _desc
-
-            return _tmpBlockObj;
-        }
-
-        function getorgBlockObj(positionLineInfo) {
-
-            var _orgLine = { "lineX": 0, "lineY": 0, "blocks": [] };
-            var _tmpLineObj;
-
-
-            _tmpLineObj = jQuery.extend(true, {}, _orgLine)
-
-            _tmpLineObj.lineX = positionLineInfo.x
-            _tmpLineObj.lineY = positionLineInfo.y
-
-            return _tmpLineObj;
-        }
-
-        function showBlockInfo(obj){
-           var _this =obj;
-          // log("value:" + _this.text())
-          // log(" left:" + _this.css("left"));
-          // log(" width:" + _this.css("width"));
-           //log(" font-size:" + _this.css("font-size"));
-          // log(" text-align:" + _this.css("text-align"));
-          // log(" font-weight:" + _this.css("font-weight"));
-
-          var _fontSize=_this.css("font-size").replace("px","");
-          var _left=_this.css("left").replace("px","");
-          var _width=_this.css("width").replace("px","");
-          var _align=_this.css("text-align").replace("px","");
-          var _isBold= (_this.css("font-weight")>400);
-          $("#modifyBlockFontSize").val(_fontSize);
-          $("#modifyBlockLeft").val(_left);
-          $("#modifyBlockWidth").val(_width);
-          $("#modifyBlockAlign").val(_align);
-          $("#modifyBlockIsBold").prop("checked",_isBold);
-          
-          log(_isBold);
-
-          gselectDiv=obj;
-
-        }
-
-        function showErrMsg(msg) {
-            var _msg = msg ? msg : "請開F12看console";
-            // 如果解析錯誤，顯示錯誤訊息
-            //if (window.location.href.indexOf("#debug") == -1){
-            //    alert("請開F12看console");
-            //}
-            console.log(_msg);
-            $("#lbLoading").hide();
-            $("#btnParse").attr("disabled", false);
-        }
-
-        function log(msg) {
-            console.log(msg);
-        }
-
-        //-----------------------------------------------
-        function CreateLine(x, y, items) {
-            return {
-                lineX: x,
-                lineY: y,
-                items: items
-            };
-        }
-
-        function CreateItem(desc, fontSize) {
-            return {
-                desc: desc,
-                fontSize: fontSize,
-                SetPosition: function (x, y, width) {
-                    this.x = x;
-                    this.y = y;
-                    this.width = width;
-                    return this;
-                },
-                SetAlignment: function (alignment) {
-                    this.alignment = alignment;
-                    return this;
-                }
-            };
-        }
-
-        function transformDataToText(data) {
-            let result = "";
-
-            if (Array.isArray(data)) {
-                data.forEach(item => {
-                    let blocksText = item.blocks.map(block => {
-                        return `CreateItem(@\"${block.desc}\", ${block.fontSize})` +
-                            `.SetPosition(${block.x}, ${block.y}, ${block.width})` +
-                            `.SetAlignment(Order.Contract.Alignment.${block.alignment.charAt(0).toUpperCase() + block.alignment.slice(1)})`;
-                    }).join(", ");
-
-                    result += `lines.Add(CreateLine(${item.lineX}, ${item.lineY}, [${blocksText}]));\n`;
-                });
-            } else {
-                console.error("data 不是一個有效的陣列");
-            }
-
-            return result;
-        }
-
-        function transformDataToHtml(paperSize,data) {
-            let result = "";
-            if (Array.isArray(data)) {
-                var _fontSize,_minHeight;
-                var _blockType;
-                data.forEach(item => {
-                    _fontSize = 0;
-                    let blocksText = item.blocks.map(block => {
-                        _fontSize = `${block.fontSize}` > _fontSize ? `${block.fontSize}` : _fontSize;
-                        //log(block.Type );
-                        _blockType=block.Type;
-                        if(block.Type=="Divider"){                          
-                          //return `<div class="box-inner middle-line" style="left:${block.x};width:${block.width};"></div> `;
-                          return `<div class="middle-line" style="left:${block.x};width:${block.width};"></div> `;
-                        }else{
-                          var _fontStyle="";
-                          log(block.FontStyle);
-                          if(block.FontStyle=="Underline"){                            
-                            _fontStyle="text-decoration:Underline;";
-                          }
-                          if(block.FontStyle=="Bold"){
-                            
-                            _fontStyle="font-weight:bold;";
-                          }
-                        return `<div class="box-inner" ` +
-                            `style="left:${block.x};top:${block.y};width:${block.width};font-size:${block.fontSize}pt;text-align:${block.alignment.charAt(0).toUpperCase() + block.alignment.slice(1)};${_fontStyle}"">` +
-                            `${block.desc}</div>`;
-                        }
-                    }).join("");
-                    //_minHeight = parseInt(_fontSize) + parseInt(_fontSize / 3);                    
-                    //_minHeight = parseInt(_fontSize) + gLayoutConfig["FontSpecing"]*3;
-                    _minHeight = parseInt(_fontSize) + parseInt(_fontSize / 3)+ gLayoutConfig["FontSpecing"]*2;
-                    //模擬換行時的高度變動,實際上不需要
-                    if(blocksText.indexOf("備註")>0 
-                    || blocksText.indexOf("804D")>0 
-                    || blocksText.indexOf("801A")>0){
-                      _minHeight=_minHeight*2;
-                    }
-
-                    if(_blockType=="Divider"){_minHeight=0;}                    
-                    
-                    result += `<div class="box-${paperSize}" style="min-height:${_minHeight}" >${blocksText}</div>`;
-                    _minHeight = 0;
-                });
-                //console.log(result);
-                return result;
-            } else {
-                console.error("data 不是一個有效的陣列");
-            }
-
-
-            //let html = `<div style="position: relative">`;
-
-
-            //// 項目標題
-            //const header = data[3].blocks;
-            //html +=`<div class="box-3inch" style="height:28px;">'
-            //            <div>
-            //                <div class="box-inner" style="top:0;left:0;width:300px;font-size:${header[0].fontSize}px;">
-            //                    ${header[0].desc}
-            //                </div>
-            //                <div class="box-inner" style="top:0;left:301px;width:99px;font-size:${header[1].fontSize}px;">
-            //                    ${header[1].desc}
-            //                </div>
-            //                <div class="box-inner" style="top:0;left:401px;width:99px;font-size:${header[2].fontSize}px;">
-            //                    ${header[2].desc}
-            //                </div>
-            //                <div class="box-inner" style="top:0;left:501px;width:70px;font-size:${header[3].fontSize}px;">
-            //                    ${header[3].desc}
-            //                </div>
-            //            </div>
-            //        </div>`;
-
-            //// 內容資料
-            //const content = data[4].blocks;
-            //html += `<div class="box-3inch">
-            //            <div>
-            //                <div class="box-inner" style="top:0;left:0;width:300px;font-size:${content[0].fontSize}px;height:21px;">
-            //                    ${content[0].desc}
-            //                </div>
-            //                <div class="box-inner" style="top:0;left:301px;width:99px;font-size:${content[1].fontSize}px;height:21px;">
-            //                    ${content[1].desc}
-            //                </div>
-            //                <div class="box-inner" style="top:0;left:401px;width:99px;font-size:${content[2].fontSize}px;height:21px;">
-            //                    ${content[2].desc}
-            //                </div>
-            //                <div class="box-inner" style="top:0;left:501px;width:70px;font-size:${content[3].fontSize}px;height:21px;">
-            //                    ${content[3].desc}
-            //                </div>
-            //            </div>
-            //        </div>`;
-
-            //html += `</div>`;
-            //return html;
-        }
-        //-------------------------------------
-        //模擬收到Contract後轉成可以跟positionTemplate合併的DatgaJson
-        // 定義不同用途的functioin() 讓contract在丟時就直接指定? 或給予參數(printCategory)
-        //  例如
-        //   print2Checkout(ContractJson); //結帳單
-        //   print2Overview(ContractJson); //匯總單|控菜單
-        //   print2Kitchen(ContractJson); //廚房單
-        //   print2Label(ContractJson);   // 標籤貼紙
-
-        function getDataJsonByCategory(contractJsonStr, printCategory) {
-            var datajson;
-            switch (printCategory) {
-                case "Checkout":
-                case "Overview":
-                case "Kitchen":
-                    datajson = getDataJson2Checkout(contractJsonStr);
-                    break;
-                    //datajson = getDataJson2Overview(contractJsonStr);
-                    //break;
-                
-                    //datajson = getDataJson2Kitchen(contractJsonStr);
-                    //break;
-                default:
-            }
-            return datajson;
-        }
-
-        //邏輯層:原想使用這層來控制哪些欄位是否出現,
-        // 但這邊只是整理資料,因為無法決定該欄位是否出現或再加上其他文字
-
-        //結帳單的邏輯層-單據
-        function getLayoutJson2Checkout(ContractJsonStr) { }
-
-        //結帳單的邏輯層-資料
-        function getDataJson2Checkout(ContractJsonStr) {
-            var _contractjson = JSON.parse(ContractJsonStr);
-
-            // 轉換數據結構
-            // Items,Discounts 可直接代替 , 其餘應需要攤平至第一層
-            switch (_contractjson.Type) {
-                case "DineIn":
-                    _orderType = "內用";
-                    break;
-                case "TakeOut":
-                    _orderType = "外帶";
-                    break;
-                case "Delivery":
-                    _orderType = "外送";
-                    break;
-                case "PickUp":
-                    _orderType = "自取";
-                    break;
-                default:
-            }
-
-            _paymentType=_contractjson.Payment.Type;
-            // switch (_contractjson.Payment.Type) {
-            //     case "Cash":
-            //         _paymentType = "現金";
-            //         break;
-            //     default:
-            // }
-
-            var _dataJson = {
-                orderType: _orderType, // 根據 Type 決定 orderType
-                orderNO: _contractjson.DisplayID,
-                DisplayID: _contractjson.DisplayID,
-                OrderID: _contractjson.ID,
-                Provider: _contractjson.Provider,
-                tranDatetime: new Date().toISOString().slice(0, 19).replace('T', ' '), // 當前時間
-                SubTotal: String(_contractjson.Bill.SubTotal),
-                ServiceCharge: String(_contractjson.Bill.ServiceCharge),
-                Discount: String(_contractjson.Bill.Discount),
-                tax: String(_contractjson.Bill.Tax),
-                TotalAmount: String(_contractjson.Bill.TotalAmount),
-                payment: _paymentType,
-                Items: _contractjson.Items,
-                Discounts: _contractjson.Discounts,
-                FloorName: _contractjson.Table["FloorName"], TableName: _contractjson.Table["TableName"],
-                //DiscountRuleName: _contractjson.Discounts[0]["DiscountRuleName"],
-                //DiscountAmount: _contractjson.Discounts[0]["DiscountAmount"],
-                Consumer: {
-                    Name: _contractjson.Consumer.Name
-                },
-                Buyer: _contractjson.Buyer,
-                Payment: {
-                    Type: _contractjson.Payment.Type,
-                    TransactionCode: _contractjson.Payment.TransactionCode,
-                    RedeemAmount: _contractjson.Payment.RedeemAmount,
-                    Amount: _contractjson.Payment.Amount
-                },
-                Notes: _contractjson.Footer.Notes,
-                EmpName: _contractjson.Employee["EmployeeName"],
-                InvoiceNumber:_contractjson.Invoice["InvoiceNumber"],
-                UniformNumber:_contractjson.Invoice["UniformNumber"],
-                peoples:"4",
-                CarrierNo:_contractjson.Invoice["CarrierNo"],
-                StoreName:_contractjson.Employee["StoreName"],
-                stationName:_contractjson.stationName,
-                SubItem:_contractjson.SubItem,
-                Tableware:_contractjson.Tableware,
-                SubItemAmount:"-----共4項------",
-                TablewareAmount:"-----共5項餐具------"
-            };
-
-            return _dataJson;
-        }
-
-        //總單的邏輯層
-        function getDataJson2Overview(ContractJsonStr) {
-            var _contractjson = JSON.parse(ContractJsonStr);
-
-            // 轉換數據結構
-            // Items,Discounts 可直接代替 , 其餘應需要攤平至第一層
-            switch (_contractjson.Type) {
-                case "DineIn":
-                    _orderType = "內用";
-                    break;
-                case "TakeOut":
-                    _orderType = "外帶";
-                    break;
-                case "Delivery":
-                    _orderType = "外送";
-                    break;
-                case "PickUp":
-                    _orderType = "自取";
-                    break;
-                default:
-            }
-
-            switch (_contractjson.Payment.Type) {
-                case "Cash":
-                    _paymentType = "現金";
-                    break;
-                default:
-            }
-
-            var _dataJson = {
-                orderType: _orderType, // 根據 Type 決定 orderType
-                orderNO: _contractjson.DisplayID,
-                orderID: _contractjson.ID,
-                Provider: _contractjson.Provider,
-                tranDatetime: new Date().toISOString().slice(0, 19).replace('T', ' '), // 當前時間
-                subTotal: String(_contractjson.Bill.SubTotal),
-                tax: String(_contractjson.Bill.Tax),
-                amount: String(_contractjson.Bill.TotalAmount),
-                payment: _paymentType,
-                Items: _contractjson.Items,
-                Discounts: _contractjson.Discounts,
-                Floor: _contractjson.Table["Floor"], Table: _contractjson.Table["Table"],
-                //DiscountRuleName: _contractjson.Discounts[0]["DiscountRuleName"],
-                //DiscountAmount: _contractjson.Discounts[0]["DiscountAmount"],
-                Consumer: {
-                    Name: _contractjson.Consumer.Name
-                },
-                Buyer: _contractjson.Buyer,
-                Payment: {
-                    Type: _contractjson.Payment.Type,
-                    TransactionCode: _contractjson.Payment.TransactionCode,
-                    RedeemAmount: _contractjson.Payment.RedeemAmount,
-                    Amount: _contractjson.Payment.Amount
-                },
-                Notes: _contractjson.Footer.Notes,
-                EmpName: _contractjson.Employee["EmployeeName"],
-                InvoiceNumber:_contractjson.Invoice["InvoiceNumber"],
-                UniformNumber:_contractjson.Invoice["UniformNumber"],
-                peoples:"4",
-                CarrierNo:_contractjson.Invoice["CarrierNo"],
-                StoreName:_contractjson.Employee["StoreName"],
-                SubItem:_contractjson.SubItem,
-                Tableware:_contractjson.Tableware,
-                SubItemAmount:"-----共4項------",
-                TablewareAmount:"-----共5項餐具------"
-            };
-
-            return _dataJson;
-        }
-
-        //廚房單的邏輯層
-        function getDataJson2Kitchen(ContractJsonStr) {
-            var _contractjson = JSON.parse(ContractJsonStr);
-
-            // 轉換數據結構
-            // Items,Discounts 可直接代替 , 其餘應需要攤平至第一層
-            switch (_contractjson.Type) {
-                case "DineIn":
-                    _orderType = "內用";
-                    break;
-                case "TakeOut":
-                    _orderType = "外帶";
-                    break;
-                case "Delivery":
-                    _orderType = "外送";
-                    break;
-                case "PickUp":
-                    _orderType = "自取";
-                    break;
-                default:
-            }
-
-            switch (_contractjson.Payment.Type) {
-                case "Cash":
-                    _paymentType = "現金";
-                    break;
-                default:
-            }
-
-            var _dataJson = {
-                orderType: _orderType, // 根據 Type 決定 orderType
-                orderNO: _contractjson.DisplayID,
-                orderID: _contractjson.ID,
-                Provider: _contractjson.Provider,
-                tranDatetime: new Date().toISOString().slice(0, 19).replace('T', ' '), // 當前時間
-                subTotal: String(_contractjson.Bill.SubTotal),
-                tax: String(_contractjson.Bill.Tax),
-                amount: String(_contractjson.Bill.TotalAmount),
-                payment: _paymentType,
-                Items: _contractjson.Items,
-                Discounts: _contractjson.Discounts,
-                Floor: _contractjson.Table["Floor"], Table: _contractjson.Table["Table"],
-                //DiscountRuleName: _contractjson.Discounts[0]["DiscountRuleName"],
-                //DiscountAmount: _contractjson.Discounts[0]["DiscountAmount"],
-                Consumer: {
-                    Name: _contractjson.Consumer.Name
-                },
-                Buyer: _contractjson.Buyer,
-                Payment: {
-                    Type: _contractjson.Payment.Type,
-                    TransactionCode: _contractjson.Payment.TransactionCode,
-                    RedeemAmount: _contractjson.Payment.RedeemAmount,
-                    Amount: _contractjson.Payment.Amount
-                },
-                //Notes: _contractjson.Notes.Notes,
-                staff: _contractjson.staff
-            };
-
-            return _dataJson;
-        }
-
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script>
-        document.getElementById("btnCapture").addEventListener("click", function() {
-          var _paperSize="3inch";
-            var content = document.getElementById("HtmlOutput_"+_paperSize);
+            const bar = document.getElementById('progressBar');
+            const text = document.getElementById('progressText');
             
-            html2canvas(content).then(function(canvas) {
-              var _tranDatetime= new Date().toISOString().slice(0, 19).replace('T', ' ') // 當前時間
-                // 將 <canvas> 轉換為圖片
-                var img = canvas.toDataURL("image/png");
-
-                // 顯示圖片
-                /*
-                var imgElement = document.createElement("img");
-                imgElement.src = img;
-                document.body.appendChild(imgElement);
-                */
-                var _timeStr=new Date().toLocaleTimeString().slice(2,10).replaceAll(":","");
-                // 下載圖片
-                var link = document.createElement("a");
-                link.href = img;
-                link.download = "captured-image_"+_paperSize+"_"+_timeStr+".png";
-                link.click();
-            });
-        });
+            bar.style.width = percent + '%';
+            text.innerText = Math.round(percent) + '%';
+            
+            if (percent === 100) {
+                text.innerText = "BOSS UNLOCKED!";
+                text.classList.add('text-red-500', 'animate-bounce');
+            } else {
+                text.classList.remove('text-red-500', 'animate-bounce');
+            }
+        }
     </script>
 </body>
 </html>
