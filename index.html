@@ -1,214 +1,548 @@
-﻿<!DOCTYPE html>
-<html lang="zh-TW">
+<!doctype html>
+<html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>北高 360 備戰清單 - Bert 專屬</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
-        body { font-family: 'Noto Sans TC', sans-serif; background-color: #0f172a; color: #f1f5f9; }
-        .route-card { background-color: #1e293b; border: 1px solid #334155; transition: all 0.3s ease; }
-        .route-card:hover { border-color: #38bdf8; transform: translateY(-2px); }
-        input[type="checkbox"] { accent-color: #38bdf8; width: 1.5rem; height: 1.5rem; }
-        .difficulty-star { color: #fbbf24; }
-        .boss-bg { background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('https://images.unsplash.com/photo-1474135994674-452ce991eeaf?auto=format&fit=crop&q=80&w=1000'); background-size: cover; background-position: center; }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>澳洲行程｜墨爾本・雪梨 2026</title>
+  <style>
+    :root {
+      --ink: #253238;
+      --muted: #6f7f86;
+      --paper: #fffdf8;
+      --panel: #ffffff;
+      --mist: #eef5f1;
+      --line: #d9e1df;
+      --teal: #0f766e;
+      --blue: #2563a6;
+      --coral: #c65c48;
+      --gold: #a97922;
+      --shadow: 0 18px 45px rgba(23, 42, 47, .12);
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #f5f7f4;
+      font-family: "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", Arial, sans-serif;
+      line-height: 1.65;
+    }
+
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .hero {
+      min-height: 88vh;
+      display: grid;
+      align-items: end;
+      padding: 48px;
+      color: white;
+      background:
+        linear-gradient(180deg, rgba(7, 21, 26, .18), rgba(7, 21, 26, .82)),
+        url("https://images.unsplash.com/photo-1545044846-351ba102b6d5?auto=format&fit=crop&w=2200&q=80") center/cover;
+    }
+
+    .hero-inner { max-width: 980px; }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: #d6f0e9;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(44px, 8vw, 86px);
+      line-height: 1.03;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: 18px 0 0;
+      font-size: 20px;
+      color: rgba(255, 255, 255, .9);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .pill {
+      border: 1px solid rgba(255, 255, 255, .34);
+      background: rgba(255, 255, 255, .13);
+      padding: 8px 12px;
+      border-radius: 999px;
+      backdrop-filter: blur(8px);
+      font-size: 14px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+
+    nav {
+      position: sticky;
+      top: 18px;
+      align-self: start;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    nav h2 {
+      margin: 0 0 12px;
+      font-size: 15px;
+      color: var(--teal);
+    }
+
+    nav a {
+      display: block;
+      padding: 7px 0;
+      color: var(--ink);
+      font-size: 14px;
+      border-bottom: 1px solid #edf0ef;
+    }
+
+    nav a:last-child { border-bottom: 0; }
+
+    main { min-width: 0; }
+
+    section {
+      margin-bottom: 28px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .section-head {
+      padding: 22px 24px;
+      background: linear-gradient(90deg, #f2faf7, #fff8ef);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 26px;
+      line-height: 1.25;
+    }
+
+    .section-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+    }
+
+    .content { padding: 22px 24px 26px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .box {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 16px;
+    }
+
+    .box h3 {
+      margin: 0 0 10px;
+      color: var(--teal);
+      font-size: 18px;
+    }
+
+    ul, ol { margin: 8px 0 0; padding-left: 1.25em; }
+    li { margin: 4px 0; }
+
+    .timeline {
+      display: grid;
+      gap: 10px;
+    }
+
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 84px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .day-tag {
+      color: var(--coral);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .day {
+      border-left: 6px solid var(--teal);
+    }
+
+    .day:nth-of-type(odd) { border-left-color: var(--blue); }
+
+    .day-title {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: baseline;
+    }
+
+    .day-title .date {
+      color: var(--coral);
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    .map-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      padding: 9px 12px;
+      border-radius: var(--radius);
+      color: white;
+      background: var(--blue);
+      font-weight: 700;
+    }
+
+    .map-link:hover { text-decoration: none; background: #1d4f86; }
+
+    .note {
+      border-left: 4px solid var(--gold);
+      background: #fff8e7;
+      padding: 12px 14px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin-top: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: var(--radius);
+      background: white;
+    }
+
+    th, td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--teal);
+      background: #edf7f4;
+      font-size: 14px;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .checklist li { list-style: none; position: relative; }
+    .checklist li::before {
+      content: "□";
+      position: absolute;
+      left: -1.25em;
+      color: var(--teal);
+      font-weight: 800;
+    }
+
+    .small { color: var(--muted); font-size: 14px; }
+
+    footer {
+      max-width: 1280px;
+      margin: 0 auto 36px;
+      padding: 0 28px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 900px) {
+      .hero { min-height: 72vh; padding: 30px 22px; }
+      .layout { display: block; padding: 18px; }
+      nav { position: static; margin-bottom: 18px; }
+      .grid, .grid.three { grid-template-columns: 1fr; }
+      .timeline-row { grid-template-columns: 1fr; gap: 4px; }
+      .section-head, .content { padding-left: 18px; padding-right: 18px; }
+    }
+
+    @media print {
+      body { background: white; }
+      .hero { min-height: auto; padding: 36px; color: var(--ink); background: white; border-bottom: 2px solid var(--line); }
+      .hero p, .eyebrow { color: var(--muted); }
+      .pill { color: var(--ink); border-color: var(--line); background: white; }
+      .layout { display: block; padding: 0; max-width: none; }
+      nav { display: none; }
+      section { box-shadow: none; border-left: 0; border-right: 0; border-radius: 0; break-inside: avoid; }
+      .map-link { color: var(--blue); background: transparent; padding: 0; }
+    }
+  </style>
 </head>
-<body class="p-4 md:p-8">
-    <div class="max-w-4xl mx-auto">
-        <!-- Boss Header -->
-        <header class="boss-bg border-2 border-red-900/50 p-8 md:p-12 rounded-3xl shadow-2xl mb-10 text-center relative overflow-hidden">
-            <div class="absolute top-4 right-4 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold animate-pulse">
-                FINAL BOSS: 360KM
-            </div>
-            <h1 class="text-4xl md:text-5xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-red-500 to-purple-600">
-                北高 360 征服之路
-            </h1>
-            <p class="text-gray-300 text-lg mb-8">Bert，這不是一場普通的練習，這是為了擊敗大魔王的修行。</p>
-            
-            <div class="bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/10">
-                <div class="flex justify-between items-end mb-2">
-                    <span class="text-sm font-bold text-sky-400">大魔王血條 (目前準備率)</span>
-                    <span id="progressText" class="text-2xl font-mono text-white">0%</span>
-                </div>
-                <div class="w-full h-4 bg-gray-800 rounded-full overflow-hidden border border-gray-700">
-                    <div id="progressBar" class="h-full bg-gradient-to-r from-sky-500 to-blue-600 shadow-[0_0_15px_rgba(56,189,248,0.5)] transition-all duration-1000" style="width: 0%"></div>
-                </div>
-                <p class="text-xs text-gray-500 mt-3 italic text-left">※ 完成所有練習路線，即可獲得與魔王一戰的資格。</p>
-            </div>
-        </header>
-
-        <!-- Strategy Summary -->
-        <div class="grid md:grid-cols-3 gap-4 mb-10">
-            <div class="bg-blue-900/20 border border-blue-500/30 p-4 rounded-xl text-center">
-                <div class="text-2xl mb-1">🌬️</div>
-                <div class="text-sm font-bold text-blue-300">風阻抗性</div>
-                <div class="text-xs text-gray-400">適應西濱強風</div>
-            </div>
-            <div class="bg-orange-900/20 border border-orange-500/30 p-4 rounded-xl text-center">
-                <div class="text-2xl mb-1">🍗</div>
-                <div class="text-sm font-bold text-orange-300">補給頻率</div>
-                <div class="text-xs text-gray-400">每小時 40-60g 碳水</div>
-            </div>
-            <div class="bg-purple-900/20 border border-purple-500/30 p-4 rounded-xl text-center">
-                <div class="text-2xl mb-1">🧘</div>
-                <div class="text-sm font-bold text-purple-300">核心穩定</div>
-                <div class="text-xs text-gray-400">降低肩膀與手掌壓力</div>
-            </div>
-        </div>
-
-        <!-- Tier 1: 基礎修行 (基礎體感) -->
-        <div class="mb-10">
-            <h2 class="text-xl font-bold mb-4 flex items-center text-sky-400">
-                <span class="mr-2">LV 1.</span> 基礎體感修行 <span class="ml-2 text-xs font-normal text-gray-500">適合找回車感</span>
-            </h2>
-            <div class="space-y-4">
-                <div class="route-card p-5 rounded-2xl flex items-center gap-4">
-                    <input type="checkbox" id="r1" class="route-cb" onchange="updateProgress()">
-                    <div class="flex-1">
-                        <label for="r1" class="font-bold text-lg block cursor-pointer">環小台北路線</label>
-                        <p class="text-sm text-gray-400">目的：測試車輛設定（Bike Fit）。如果有手麻或膝蓋痛，這段就要調整好。</p>
-                    </div>
-                    <div class="text-right hidden sm:block">
-                        <span class="text-xs text-gray-500 block mb-1">難度</span>
-                        <div class="difficulty-star">★☆☆☆☆</div>
-                    </div>
-                </div>
-
-                <div class="route-card p-5 rounded-2xl flex items-center gap-4">
-                    <input type="checkbox" id="r5" class="route-cb" onchange="updateProgress()">
-                    <div class="flex-1">
-                        <label for="r5" class="font-bold text-lg block cursor-pointer">鶯歌吃早餐路線</label>
-                        <p class="text-sm text-gray-400">目的：練習長途之後的「恢復感」。學習在微累的情況下維持踏頻。</p>
-                    </div>
-                    <div class="text-right hidden sm:block">
-                        <span class="text-xs text-gray-500 block mb-1">難度</span>
-                        <div class="difficulty-star">★☆☆☆☆</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tier 2: 進階試煉 (肌耐力與心肺) -->
-        <div class="mb-10">
-            <h2 class="text-xl font-bold mb-4 flex items-center text-emerald-400">
-                <span class="mr-2">LV 2.</span> 進階耐力試煉 <span class="ml-2 text-xs font-normal text-gray-500">強化核心與大腿</span>
-            </h2>
-            <div class="grid md:grid-cols-2 gap-4">
-                <div class="route-card p-5 rounded-2xl flex flex-col justify-between border-l-4 border-emerald-500">
-                    <div class="flex items-start gap-4 mb-4">
-                        <input type="checkbox" id="r2" class="route-cb" onchange="updateProgress()">
-                        <label for="r2" class="font-bold cursor-pointer">平溪路線 (106縣道)</label>
-                    </div>
-                    <p class="text-xs text-gray-400 italic">對抗北高：雖然北高平坦，但長緩坡練習能大幅提升踏踏效能。</p>
-                </div>
-
-                <div class="route-card p-5 rounded-2xl flex flex-col justify-between border-l-4 border-emerald-500">
-                    <div class="flex items-start gap-4 mb-4">
-                        <input type="checkbox" id="r3" class="route-cb" onchange="updateProgress()">
-                        <label for="r3" class="font-bold cursor-pointer">烏來路線</label>
-                    </div>
-                    <p class="text-xs text-gray-400 italic">對抗北高：練習「定速巡航」的概念，在爬坡時不爆心跳。</p>
-                </div>
-
-                <div class="route-card p-5 rounded-2xl flex flex-col justify-between border-l-4 border-emerald-500">
-                    <div class="flex items-start gap-4 mb-4">
-                        <input type="checkbox" id="r4" class="route-cb" onchange="updateProgress()">
-                        <label for="r4" class="font-bold cursor-pointer">三峽路線</label>
-                    </div>
-                    <p class="text-xs text-gray-400 italic">對抗北高：丘陵地的起伏節奏切換，預防最後 50km 抽筋。</p>
-                </div>
-
-                <div class="route-card p-5 rounded-2xl flex flex-col justify-between border-l-4 border-emerald-500">
-                    <div class="flex items-start gap-4 mb-4">
-                        <input type="checkbox" id="r8" class="route-cb" onchange="updateProgress()">
-                        <label for="r8" class="font-bold cursor-pointer">大溪路線</label>
-                    </div>
-                    <p class="text-xs text-gray-400 italic">對抗北高：長距離平坦公路練習，這是最接近西濱體感的路線。</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tier 3: 終極挑戰 (大魔王模擬) -->
-        <div class="mb-12">
-            <h2 class="text-xl font-bold mb-4 flex items-center text-red-500">
-                <span class="mr-2">LV 3.</span> 終極魔王模擬 <span class="ml-2 text-xs font-normal text-gray-500">正式挑戰前的生死戰</span>
-            </h2>
-            <div class="space-y-4">
-                <div class="route-card p-6 rounded-2xl border-2 border-red-500/30 bg-red-900/10 shadow-[0_0_20px_rgba(239,68,68,0.1)]">
-                    <div class="flex items-center gap-4 mb-2">
-                        <input type="checkbox" id="r7" class="route-cb w-8 h-8" onchange="updateProgress()">
-                        <label for="r7" class="font-bold text-xl text-red-400 cursor-pointer">基隆北海岸 (必練之最)</label>
-                    </div>
-                    <p class="text-gray-300 text-sm mb-4">這條路線的「側風」與「東北季風」是北高魔王最常用的技能。如果你能在那裡維持 28km/h，你就能在北高完賽。</p>
-                    <div class="flex gap-2">
-                        <span class="px-2 py-1 bg-red-600/20 text-red-400 text-[10px] rounded border border-red-500/40 uppercase">風阻適應</span>
-                        <span class="px-2 py-1 bg-red-600/20 text-red-400 text-[10px] rounded border border-red-500/40 uppercase">心靈洗禮</span>
-                    </div>
-                </div>
-
-                <div class="route-card p-6 rounded-2xl border-2 border-purple-500/30 bg-purple-900/10 shadow-[0_0_20px_rgba(168,85,247,0.1)]">
-                    <div class="flex items-center gap-4 mb-2">
-                        <input type="checkbox" id="r6" class="route-cb w-8 h-8" onchange="updateProgress()">
-                        <label for="r6" class="font-bold text-xl text-purple-400 cursor-pointer">石門水庫 (耐力極限)</label>
-                    </div>
-                    <p class="text-gray-300 text-sm mb-4">長里程加上最後的爬升，模擬北高第 250 公里（嘉義台南段）的疲累感。測試你的補給是否能撐住你的體能。</p>
-                    <div class="flex gap-2">
-                        <span class="px-2 py-1 bg-purple-600/20 text-purple-400 text-[10px] rounded border border-purple-500/40 uppercase">耐力爆發</span>
-                        <span class="px-2 py-1 bg-purple-600/20 text-purple-400 text-[10px] rounded border border-purple-500/40 uppercase">補給測試</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Survival Tips -->
-        <div class="bg-gray-800 p-8 rounded-3xl border border-gray-700">
-            <h2 class="text-xl font-bold mb-6 flex items-center text-yellow-500 italic">
-                SECRET TIPS FOR BERT
-            </h2>
-            <div class="grid sm:grid-cols-2 gap-6">
-                <div class="flex gap-4">
-                    <div class="text-2xl">⚡</div>
-                    <div>
-                        <p class="font-bold text-sm">魔王的弱點：順風</p>
-                        <p class="text-xs text-gray-400 leading-relaxed">北高看天騎車。如果東北季風強勁，魔王血量直接減半。但千萬別因為順風就過度踩踏，膝蓋會爆。</p>
-                    </div>
-                </div>
-                <div class="flex gap-4">
-                    <div class="text-2xl">🧊</div>
-                    <div>
-                        <p class="font-bold text-sm">最強回血劑：便利商店</p>
-                        <p class="text-xs text-gray-400 leading-relaxed">在北高路上，每一間全家都是存檔點。建議喝罐冰可樂或冰美式，對於心理與神經的提振非常有效。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <footer class="mt-16 pb-12 text-center">
-            <p class="text-gray-600 text-xs tracking-widest uppercase">Bert, We believe in you. Conquer the 360.</p>
-        </footer>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">Australia Travel Handbook</p>
+      <h1>墨爾本・雪梨<br>9 天 8 夜行程</h1>
+      <p>把每日行程、交通路線、訂位提醒、注意事項與備用方案整合成一份出發前好檢查、旅途中好翻閱的旅行手冊。</p>
+      <div class="hero-meta">
+        <span class="pill">2026/6/13-6/22</span>
+        <span class="pill">台北 → 香港 → 墨爾本 → 雪梨</span>
+        <span class="pill">大洋路・企鵝歸巢・藍山</span>
+      </div>
     </div>
+  </header>
 
-    <script>
-        function updateProgress() {
-            const checkboxes = document.querySelectorAll('.route-cb');
-            const checked = document.querySelectorAll('.route-cb:checked');
-            const percent = (checked.length / checkboxes.length) * 100;
-            
-            const bar = document.getElementById('progressBar');
-            const text = document.getElementById('progressText');
-            
-            bar.style.width = percent + '%';
-            text.innerText = Math.round(percent) + '%';
-            
-            if (percent === 100) {
-                text.innerText = "BOSS UNLOCKED!";
-                text.classList.add('text-red-500', 'animate-bounce');
-            } else {
-                text.classList.remove('text-red-500', 'animate-bounce');
-            }
-        }
-    </script>
+  <div class="layout">
+    <nav aria-label="章節導覽">
+      <h2>行程導覽</h2>
+      <a href="#todo">出發前總待辦</a>
+      <a href="#overview">每日總覽</a>
+      <a href="#day0">6/13 出發日</a>
+      <a href="#day1">6/14 墨爾本抵達</a>
+      <a href="#day2">6/15 墨爾本 CBD</a>
+      <a href="#day3">6/16 大洋路</a>
+      <a href="#day4">6/17 Phillip Island</a>
+      <a href="#day5">6/18 飛雪梨</a>
+      <a href="#day6">6/19 藍山</a>
+      <a href="#day7">6/20 Circular Quay</a>
+      <a href="#day8">6/21 回程日</a>
+      <a href="#extras">額外注意</a>
+    </nav>
+
+    <main>
+      <section id="todo">
+        <div class="section-head">
+          <h2>出發前總待辦</h2>
+          <p>先把文件、票券、網路、交通與冬季裝備確認好，旅途中會輕很多。</p>
+        </div>
+        <div class="content grid">
+          <div class="box">
+            <h3>必做清單</h3>
+            <ul class="checklist">
+              <li>確認澳洲 ETA / 簽證。</li>
+              <li>確認旅遊保險，保單存在手機與雲端。</li>
+              <li>準備護照影本與重要文件電子備份。</li>
+              <li>確認國泰與 Virgin Australia 航班、訂位代號、行李額度。</li>
+              <li>訂澳洲 eSIM / 漫遊。</li>
+              <li>下載或收藏 Google Maps：Melbourne、Great Ocean Road、Phillip Island、Sydney、Blue Mountains。</li>
+              <li>準備信用卡與少量澳幣現金。</li>
+              <li>準備防風外套、輕便雨具、好走鞋。</li>
+            </ul>
+          </div>
+          <div class="box">
+            <h3>建議先訂</h3>
+            <ul class="checklist">
+              <li>6/15 墨爾本晚餐：Tipo 00 / Chin Chin / Supernormal / Cumulus Inc.</li>
+              <li>6/16 大洋路一日遊 KKday。</li>
+              <li>6/17 Phillip Island 企鵝＋動物園 KKday。</li>
+              <li>6/18 墨爾本 MEL → 雪梨 SYD 機票。</li>
+              <li>6/19 藍山一日遊 KKday。</li>
+              <li>6/20 若選 Taronga Zoo，先買門票。</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="overview">
+        <div class="section-head">
+          <h2>每日總覽</h2>
+          <p>長途日只放一個主題；移動日不塞滿；每天保留雨天與低體力版本。</p>
+        </div>
+        <div class="content">
+          <div class="timeline">
+            <div class="timeline-row"><div class="day-tag">Day 0</div><div>6/13（六）台北出發、香港轉機、夜飛墨爾本。</div></div>
+            <div class="timeline-row"><div class="day-tag">Day 1</div><div>6/14（日）抵達墨爾本、飯店、Federation Square、Yarra River、Queen Victoria Market 可選。</div></div>
+            <div class="timeline-row"><div class="day-tag">Day 2</div><div>6/15（一）墨爾本 CBD、咖啡巷弄、圖書館、購物，晚餐建議訂位。</div></div>
+            <div class="timeline-row"><div class="day-tag">Day 3</div><div>6/16（二）大洋路一日，十二使徒岩、Loch Ard Gorge，訂 KKday。</div></div>
+            <div class="timeline-row"><div class="day-tag">Day 4</div><div>6/17（三）Phillip Island 企鵝歸巢，動物園與 Cowes 早晚餐。</div></div>
+            <div class="timeline-row"><div class="day-tag">Day 5</div><div>6/18（四）墨爾本飛雪梨，Circular Quay、Opera House、The Rocks。</div></div>
+            <div class="timeline-row"><div class="day-tag">Day 6</div><div>6/19（五）藍山一日，Three Sisters、Scenic World，訂 KKday。</div></div>
+            <div class="timeline-row"><div class="day-tag">Day 7</div><div>6/20（六）Circular Quay 出發，Taronga Zoo 或 Manly Beach 二選一。</div></div>
+            <div class="timeline-row"><div class="day-tag">Day 8</div><div>6/21（日）最後購物、寄放行李、18:30-19:00 前往雪梨機場。</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="day" id="day0">
+        <div class="section-head">
+          <div class="day-title"><span class="date">6/13（六）</span><h2>Day 0｜台北出發，香港轉機</h2></div>
+          <p>TPE 12:00 → HKG 14:05，HKG 19:00 → MEL 05:55+1。</p>
+        </div>
+        <div class="content grid three">
+          <div class="box"><h3>今日行程</h3><ol><li>台北桃園機場出發。</li><li>香港轉機 4h55m。</li><li>夜飛墨爾本，機上休息。</li></ol></div>
+          <div class="box"><h3>注意事項</h3><ul><li>出門前確認護照、信用卡、手機、行動電源。</li><li>香港轉機先確認下一段登機口。</li><li>機上以睡眠、補水為主。</li></ul></div>
+          <div class="box"><h3>備用方案</h3><ul><li>第一段延誤時先看轉機櫃台與登機口。</li><li>機上睡不好，6/14 只保留輕鬆散步。</li></ul></div>
+        </div>
+      </section>
+
+      <section class="day" id="day1">
+        <div class="section-head">
+          <div class="day-title"><span class="date">6/14（日）</span><h2>Day 1｜抵達墨爾本，飯店，維多利亞市場</h2></div>
+          <p>清晨抵達，今天主軸是恢復體力和熟悉飯店周邊。</p>
+        </div>
+        <div class="content">
+          <div class="grid three">
+            <div class="box"><h3>今日行程</h3><ol><li>05:55 抵達 Melbourne Airport。</li><li>Aura on Flinders 寄放行李。</li><li>Federation Square / Flinders Street Station。</li><li>Yarra River 南岸散步。</li><li>Queen Victoria Market 可選。</li></ol></div>
+            <div class="box"><h3>餐廳安排</h3><ul><li>早餐／早午餐：Higher Ground。</li><li>午餐：Queen Victoria Market 或 Flinders Lane。</li><li>晚餐：Cumulus Inc. 或 Chin Chin；太累就簡餐。</li></ul></div>
+            <div class="box"><h3>注意事項</h3><ul><li>清晨抵達，不要急著跑行程。</li><li>Queen Victoria Market 週日可排，週一不營業。</li><li>若無法提早入住，找咖啡廳坐下休息。</li></ul></div>
+          </div>
+          <div class="note"><strong>機場到飯店：</strong>搭 SkyBus 到 Southern Cross Station，再步行或短程 Uber / Taxi 到 Aura on Flinders。行李多或太累時直接 Uber / Taxi。</div>
+          <a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=Melbourne+Airport&destination=Aura+on+Flinders+Serviced+Apartments+Melbourne&travelmode=transit" target="_blank" rel="noreferrer">開啟：Melbourne Airport → Aura on Flinders</a>
+          <a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=Aura+on+Flinders+Serviced+Apartments+Melbourne&destination=Queen+Victoria+Market&travelmode=walking" target="_blank" rel="noreferrer">開啟：飯店 → Queen Victoria Market</a>
+        </div>
+      </section>
+
+      <section class="day" id="day2">
+        <div class="section-head">
+          <div class="day-title"><span class="date">6/15（一）</span><h2>Day 2｜墨爾本 CBD，晚餐訂位</h2></div>
+          <p>咖啡巷弄、街頭藝術、圖書館、購物和 Flinders Lane 晚餐。</p>
+        </div>
+        <div class="content grid three">
+          <div class="box"><h3>地理順序</h3><ol><li>Degraves Street / Centre Place。</li><li>Hosier Lane。</li><li>State Library Victoria。</li><li>Melbourne Central / Emporium。</li><li>Chinatown / Flinders Lane。</li></ol><a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=Aura+on+Flinders+Serviced+Apartments+Melbourne&destination=Aura+on+Flinders+Serviced+Apartments+Melbourne&waypoints=Degraves+Street+Melbourne%7CHosier+Lane+Melbourne%7CState+Library+Victoria%7CMelbourne+Central%7CEmporium+Melbourne%7CChinatown+Melbourne&travelmode=walking" target="_blank" rel="noreferrer">開啟 CBD 路線</a></div>
+          <div class="box"><h3>晚餐訂位</h3><ul class="checklist"><li>Tipo 00：義大利麵，熱門。</li><li>Chin Chin：熱鬧泰式。</li><li>Supernormal：亞洲風味。</li><li>Cumulus Inc.：Flinders Lane，動線順。</li></ul></div>
+          <div class="box"><h3>注意與備案</h3><ul><li>Queen Victoria Market 週一不營業。</li><li>墨爾本天氣變化快，帶外套和雨具。</li><li>雨天：State Library → Melbourne Central → Emporium。</li><li>低體力：刪 Hosier Lane。</li></ul></div>
+        </div>
+      </section>
+
+      <section class="day" id="day3">
+        <div class="section-head">
+          <div class="day-title"><span class="date">6/16（二）</span><h2>Day 3｜大洋路一日，訂 KKday</h2></div>
+          <p>長途海岸線日：十二使徒岩、Loch Ard Gorge、London Bridge。</p>
+        </div>
+        <div class="content grid three">
+          <div class="box"><h3>今日行程</h3><ol><li>墨爾本市區出發。</li><li>Memorial Arch。</li><li>Apollo Bay 午餐。</li><li>Twelve Apostles。</li><li>Loch Ard Gorge。</li><li>London Bridge。</li><li>回墨爾本。</li></ol></div>
+          <div class="box"><h3>KKday 訂票</h3><ul class="checklist"><li>確認是否含飯店接送或集合地點。</li><li>確認集合時間，通常很早。</li><li>確認是否含午餐。</li><li>確認取消規定、天氣取消規則。</li></ul></div>
+          <div class="box"><h3>注意與備案</h3><ul><li>前一晚早睡。</li><li>帶防風外套、雨具、行動電源。</li><li>容易暈車的人準備暈車藥。</li><li>團取消：改 NGV / State Library / Emporium。</li></ul><a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=Aura+on+Flinders+Serviced+Apartments+Melbourne&destination=Aura+on+Flinders+Serviced+Apartments+Melbourne&waypoints=Memorial+Arch+at+Eastern+View%7CApollo+Bay%7CTwelve+Apostles%7CLoch+Ard+Gorge%7CLondon+Bridge+Great+Ocean+Road&travelmode=driving" target="_blank" rel="noreferrer">開啟大洋路參考路線</a></div>
+        </div>
+      </section>
+
+      <section class="day" id="day4">
+        <div class="section-head">
+          <div class="day-title"><span class="date">6/17（三）</span><h2>Day 4｜Phillip Island 企鵝，訂 KKday</h2></div>
+          <p>動物園、Cowes 提早晚餐、Penguin Parade。晚上戶外很冷，保暖優先。</p>
+        </div>
+        <div class="content grid three">
+          <div class="box"><h3>今日行程</h3><ol><li>墨爾本出發。</li><li>Moonlit Sanctuary 或 Maru。</li><li>Cowes 提早晚餐。</li><li>Nobbies Centre 可選。</li><li>Phillip Island Penguin Parade。</li><li>回墨爾本。</li></ol></div>
+          <div class="box"><h3>KKday 訂票</h3><ul class="checklist"><li>確認是否含動物園。</li><li>確認集合時間、集合點、回程時間。</li><li>確認座位：General / Penguins Plus / Underground。</li><li>確認是否含晚餐。</li></ul></div>
+          <div class="box"><h3>注意與備案</h3><ul><li>企鵝歸巢是晚上戶外，非常冷。</li><li>通常不能拍照，也不要開手機螢幕。</li><li>時間不足：刪 Nobbies Centre。</li><li>下雨或風大：防風、防水、保暖。</li></ul><a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=Aura+on+Flinders+Serviced+Apartments+Melbourne&destination=Aura+on+Flinders+Serviced+Apartments+Melbourne&waypoints=Moonlit+Sanctuary+Wildlife+Conservation+Park%7CCowes+Phillip+Island%7CNobbies+Centre%7CPhillip+Island+Penguin+Parade&travelmode=driving" target="_blank" rel="noreferrer">開啟 Phillip Island 路線</a></div>
+        </div>
+      </section>
+
+      <section class="day" id="day5">
+        <div class="section-head">
+          <div class="day-title"><span class="date">6/18（四）</span><h2>Day 5｜墨爾本到雪梨，機場交通與機票</h2></div>
+          <p>MEL 11:00 → SYD 12:30；下午只排雪梨港區核心。</p>
+        </div>
+        <div class="content">
+          <div class="grid three">
+            <div class="box"><h3>今日行程</h3><ol><li>墨爾本飯店退房。</li><li>前往 Melbourne Airport。</li><li>飛雪梨。</li><li>Meriton Suites World Tower 放行李。</li><li>Circular Quay、Opera House、The Rocks。</li></ol></div>
+            <div class="box"><h3>機票提醒</h3><ul class="checklist"><li>訂 Virgin Australia MEL → SYD。</li><li>確認行李額度。</li><li>確認航廈與報到截止時間。</li><li>前一天完成線上 check-in。</li></ul></div>
+            <div class="box"><h3>注意與備案</h3><ul><li>早上不要排 Queen Victoria Market。</li><li>退房前檢查護照、充電器、保險箱。</li><li>航班延誤：只走港區核心。</li><li>行李太多：機場到飯店直接 Uber / Taxi。</li></ul></div>
+          </div>
+          <a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=Aura+on+Flinders+Serviced+Apartments+Melbourne&destination=Melbourne+Airport&travelmode=transit" target="_blank" rel="noreferrer">開啟：墨爾本飯店 → Melbourne Airport</a>
+          <a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=Sydney+Airport&destination=Meriton+Suites+World+Tower+Sydney&travelmode=transit" target="_blank" rel="noreferrer">開啟：Sydney Airport → 雪梨飯店</a>
+          <a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=Meriton+Suites+World+Tower+Sydney&destination=Meriton+Suites+World+Tower+Sydney&waypoints=Circular+Quay%7CSydney+Opera+House%7CRoyal+Botanic+Garden+Sydney%7CThe+Rocks+Sydney&travelmode=walking" target="_blank" rel="noreferrer">開啟：雪梨港區步行路線</a>
+        </div>
+      </section>
+
+      <section class="day" id="day6">
+        <div class="section-head">
+          <div class="day-title"><span class="date">6/19（五）</span><h2>Day 6｜藍山一日，訂 KKday</h2></div>
+          <p>Three Sisters、Scenic World、Leura / Katoomba。山區比市區冷。</p>
+        </div>
+        <div class="content grid three">
+          <div class="box"><h3>今日行程</h3><ol><li>雪梨飯店出發。</li><li>Central Station。</li><li>Katoomba Station。</li><li>Echo Point / Three Sisters。</li><li>Scenic World。</li><li>Leura 或 Katoomba。</li><li>回雪梨。</li></ol></div>
+          <div class="box"><h3>KKday 訂票</h3><ul class="checklist"><li>確認是否包含 Scenic World 票券。</li><li>確認是否去 Three Sisters、Echo Point、Leura。</li><li>確認集合時間、集合點、回程時間。</li><li>不跟團需查火車與當地交通。</li></ul></div>
+          <div class="box"><h3>注意與備案</h3><ul><li>帶外套、好走鞋、水、零食。</li><li>山區可能起霧，等天氣變化。</li><li>體力不足：只做 Echo Point + Scenic World。</li><li>天氣很差：改室內雪梨日。</li></ul><a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=Meriton+Suites+World+Tower+Sydney&destination=Meriton+Suites+World+Tower+Sydney&waypoints=Central+Station+Sydney%7CKatoomba+Station%7CEcho+Point+Lookout%7CScenic+World+Blue+Mountains%7CLeura+NSW&travelmode=transit" target="_blank" rel="noreferrer">開啟藍山公共交通路線</a></div>
+        </div>
+      </section>
+
+      <section class="day" id="day7">
+        <div class="section-head">
+          <div class="day-title"><span class="date">6/20（六）</span><h2>Day 7｜Circular Quay 路線圖，Taronga Zoo 或 Manly Beach</h2></div>
+          <p>以 Circular Quay 為核心，依天氣和體力二選一。</p>
+        </div>
+        <div class="content">
+          <div class="grid">
+            <div class="box">
+              <h3>A 方案：Taronga Zoo</h3>
+              <ol><li>飯店 → Circular Quay。</li><li>Circular Quay Wharf 搭船到 Taronga Zoo。</li><li>Taronga Zoo 參觀。</li><li>回港區，接 Barangaroo / Darling Harbour 晚餐。</li></ol>
+              <ul><li>先買門票。</li><li>查當天渡輪時刻。</li><li>園區有坡度，穿好走鞋。</li></ul>
+              <a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=Meriton+Suites+World+Tower+Sydney&destination=Meriton+Suites+World+Tower+Sydney&waypoints=Circular+Quay+Wharf%7CTaronga+Zoo+Sydney%7CBarangaroo+Sydney%7CDarling+Harbour&travelmode=transit" target="_blank" rel="noreferrer">開啟 Taronga Zoo 路線</a>
+            </div>
+            <div class="box">
+              <h3>B 方案：Manly Beach</h3>
+              <ol><li>飯店 → Circular Quay。</li><li>Circular Quay 搭 Manly Ferry。</li><li>Manly Wharf → The Corso → Manly Beach。</li><li>體力夠再走 Shelly Beach。</li></ol>
+              <ul><li>Manly Ferry 是很好的港景路線。</li><li>海邊風大，帶外套。</li><li>假日人多，回程不要抓太晚。</li></ul>
+              <a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=Meriton+Suites+World+Tower+Sydney&destination=Meriton+Suites+World+Tower+Sydney&waypoints=Circular+Quay+Wharf%7CManly+Wharf%7CThe+Corso+Manly%7CManly+Beach%7CShelly+Beach+Manly&travelmode=transit" target="_blank" rel="noreferrer">開啟 Manly Beach 路線</a>
+            </div>
+          </div>
+          <div class="note"><strong>雨天備案：</strong>Australian Museum → QVB → Westfield Sydney。低體力版只去 Circular Quay、Opera House 外觀、The Rocks。</div>
+        </div>
+      </section>
+
+      <section class="day" id="day8">
+        <div class="section-head">
+          <div class="day-title"><span class="date">6/21（日）</span><h2>Day 8｜回程日，最後購物與機場</h2></div>
+          <p>完全不趕：寄放行李、最後購物、18:30-19:00 前往機場。</p>
+        </div>
+        <div class="content grid three">
+          <div class="box"><h3>今日行程</h3><ol><li>Meriton 退房 / 寄放行李。</li><li>QVB。</li><li>Westfield Sydney / Pitt Street Mall。</li><li>Hyde Park / St Mary's Cathedral 可選。</li><li>回飯店拿行李。</li><li>Sydney Airport。</li></ol></div>
+          <div class="box"><h3>注意事項</h3><ul><li>17:00 前吃完早晚餐。</li><li>回飯店拿行李前預留至少 30 分鐘。</li><li>有退稅需求要提早到機場。</li><li>檢查押金、證件、充電器。</li></ul></div>
+          <div class="box"><h3>備用方案</h3><ul><li>下雨：QVB → Westfield → Pitt Street Mall。</li><li>行李多：全程寄放飯店。</li><li>交通延誤：直接 Uber / Taxi 到機場。</li><li>更保守：18:00 出發。</li></ul><a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=Meriton+Suites+World+Tower+Sydney&destination=Sydney+Airport&travelmode=transit" target="_blank" rel="noreferrer">開啟飯店 → Sydney Airport</a></div>
+        </div>
+      </section>
+
+      <section id="extras">
+        <div class="section-head">
+          <h2>額外注意事項</h2>
+          <p>交通付款、訂位策略、天氣策略與每晚睡前檢查。</p>
+        </div>
+        <div class="content grid three">
+          <div class="box">
+            <h3>交通付款</h3>
+            <ul><li>墨爾本：Free Tram Zone 內搭電車不用刷 myki；出 Free Tram Zone 才需要付費。</li><li>雪梨：可用 Opal 或支援的信用卡 / 行動支付，記得 tap on / tap off。</li></ul>
+          </div>
+          <div class="box">
+            <h3>訂位策略</h3>
+            <ul><li>熱門餐廳不要排在大洋路、企鵝、藍山這三個長途日晚上。</li><li>長途日晚上以近飯店、可取消、簡單吃為主。</li><li>需要早起的一日遊，前一晚不要訂太晚。</li></ul>
+          </div>
+          <div class="box">
+            <h3>每晚睡前確認</h3>
+            <ul class="checklist"><li>隔天集合點與集合時間。</li><li>門票 / KKday 訂單。</li><li>天氣與 Google Maps 路線。</li><li>行動電源充電。</li><li>護照、錢包、手機位置。</li></ul>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <p>製作日期：2026/6/3。此手冊為旅行規劃輔助，實際營業時間、交通與票券規則請以官方與訂單資訊為準。</p>
+  </footer>
 </body>
 </html>
