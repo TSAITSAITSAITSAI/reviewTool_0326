@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Excel 線性迴歸預測作業</title>
+  <style>
+    body {
+      font-family: "Microsoft JhengHei", Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+      line-height: 1.8;
+      margin: 0;
+      padding: 40px 0;
+    }
+
+    .report {
+      width: 850px;
+      margin: auto;
+      background: #fff;
+      padding: 48px 60px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    }
+
+    .cover {
+      text-align: center;
+      border-bottom: 3px solid #2f5f9f;
+      padding-bottom: 28px;
+      margin-bottom: 36px;
+    }
+
+    .cover h1 {
+      color: #2f5f9f;
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .info {
+      margin-top: 24px;
+      text-align: left;
+      display: inline-block;
+      font-size: 18px;
+    }
+
+    h2 {
+      color: #2f5f9f;
+      border-left: 6px solid #2f5f9f;
+      padding-left: 12px;
+      margin-top: 36px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 18px 0;
+      font-size: 18px;
+    }
+
+    th {
+      background: #2f5f9f;
+      color: white;
+    }
+
+    th, td {
+      border: 1px solid #999;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .formula {
+      background: #f0f4ff;
+      border-left: 5px solid #2f5f9f;
+      padding: 14px 18px;
+      margin: 14px 0;
+      font-size: 18px;
+    }
+
+    code {
+      background: #eee;
+      padding: 3px 6px;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    .answer {
+      background: #fff8e1;
+      border: 2px solid #f0c14b;
+      padding: 18px;
+      border-radius: 8px;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .conclusion {
+      background: #eef8f0;
+      border-left: 6px solid #4caf50;
+      padding: 16px 20px;
+      margin-top: 18px;
+    }
+
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+      .report {
+        box-shadow: none;
+        width: auto;
+        border-radius: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="report">
+    <div class="cover">
+      <h1>Excel 線性迴歸預測作業</h1>
+      <p>雨傘店銷售量預測分析</p>
+      <div class="info">
+        <p>姓名：蔡景旭</p>
+        <p>學號：__________________</p>
+        <p>日期：__________________</p>
+      </div>
+    </div>
+
+    <h2>一、作業目的</h2>
+    <p>
+      本作業使用 Excel 進行線性迴歸分析，根據雨傘店三個月的下雨天數與銷售數量，
+      計算斜率、截距、R²，並預測七月份下雨 16 天時的雨傘銷售數量。
+    </p>
+
+    <h2>二、原始資料</h2>
+    <table>
+      <tr>
+        <th>月份</th>
+        <th>下雨天數 X</th>
+        <th>銷售數量 Y</th>
+      </tr>
+      <tr>
+        <td>四月</td>
+        <td>3</td>
+        <td>8</td>
+      </tr>
+      <tr>
+        <td>五月</td>
+        <td>5</td>
+        <td>12</td>
+      </tr>
+      <tr>
+        <td>六月</td>
+        <td>8</td>
+        <td>18</td>
+      </tr>
+    </table>
+
+    <h2>三、Excel 計算公式</h2>
+    <div class="formula">
+      斜率 Slope：<code>=SLOPE(B2:B4,A2:A4)</code>
+    </div>
+    <div class="formula">
+      截距 Intercept：<code>=INTERCEPT(B2:B4,A2:A4)</code>
+    </div>
+    <div class="formula">
+      決定係數 R²：<code>=RSQ(B2:B4,A2:A4)</code>
+    </div>
+    <div class="formula">
+      七月預測：<code>=FORECAST.LINEAR(16,B2:B4,A2:A4)</code>
+    </div>
+
+    <h2>四、計算結果</h2>
+    <table>
+      <tr>
+        <th>項目</th>
+        <th>結果</th>
+      </tr>
+      <tr>
+        <td>斜率 Slope</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>截距 Intercept</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>R²</td>
+        <td>1</td>
+      </tr>
+    </table>
+
+    <p>
+      因此可得到線性迴歸方程式：
+    </p>
+
+    <div class="answer">
+      Y = 2X + 2
+    </div>
+
+    <h2>五、七月份銷售量預測</h2>
+    <p>
+      題目假設七月份下雨天數為 16 天，因此將 X = 16 代入迴歸方程式：
+    </p>
+
+    <div class="formula">
+      Y = 2 × 16 + 2
+    </div>
+
+    <div class="formula">
+      Y = 32 + 2 = 34
+    </div>
+
+    <div class="answer">
+      七月份預測銷售數量：34 把
+    </div>
+
+    <h2>六、結論</h2>
+    <div class="conclusion">
+      <p>
+        由本次分析結果可知，下雨天數與雨傘銷售量呈現完全正相關。
+        斜率為 2，代表每增加 1 天下雨，平均銷售數量會增加 2 把雨傘。
+        R² 為 1，表示此線性迴歸模型與原始資料完全吻合。
+      </p>
+      <p>
+        因此，若七月份下雨天數為 16 天，預測雨傘銷售數量為 34 把。
+      </p>
+    </div>
+  </div>
+</body>
+</html>
