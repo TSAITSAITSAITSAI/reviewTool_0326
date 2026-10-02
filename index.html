@@ -1,227 +1,165 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ASP.NET Core MVC 轉 Angular 培訓規劃</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>統一編號驗證說明</title>
   <style>
-    body {
-      margin: 0;
-      font-family: "Microsoft JhengHei", Arial, sans-serif;
-      background: #f4f6f8;
-      color: #1f2937;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 48px auto;
-      padding: 0 24px;
-    }
-
-    .header {
-      margin-bottom: 28px;
-    }
-
-    .header h1 {
-      margin: 0 0 10px;
-      font-size: 30px;
-      color: #111827;
-    }
-
-    .header p {
-      margin: 0;
-      font-size: 15px;
-      color: #6b7280;
-      line-height: 1.7;
-    }
-
-    .card {
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
-      overflow: hidden;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    thead {
-      background: #1f2937;
-      color: #ffffff;
-    }
-
-    th,
-    td {
-      padding: 18px 20px;
-      text-align: left;
-      vertical-align: top;
-      font-size: 14px;
-      line-height: 1.7;
-    }
-
-    th {
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    tbody tr {
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    tbody tr:last-child {
-      border-bottom: none;
-    }
-
-    tbody tr:hover {
-      background: #f9fafb;
-    }
-
-    .phase {
-      font-weight: 700;
-      color: #111827;
-      white-space: nowrap;
-    }
-
-    .days {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: #e0f2fe;
-      color: #0369a1;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    .output {
-      color: #047857;
-      font-weight: 600;
-    }
-
-    .note {
-      margin-top: 18px;
-      padding: 16px 18px;
-      border-left: 4px solid #2563eb;
-      background: #eff6ff;
-      color: #1e3a8a;
-      font-size: 14px;
-      line-height: 1.7;
-      border-radius: 8px;
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        margin: 28px auto;
-      }
-
-      table,
-      thead,
-      tbody,
-      th,
-      td,
-      tr {
-        display: block;
-      }
-
-      thead {
-        display: none;
-      }
-
-      tbody tr {
-        padding: 16px;
-      }
-
-      td {
-        padding: 8px 0;
-      }
-
-      td::before {
-        content: attr(data-label);
-        display: block;
-        margin-bottom: 4px;
-        font-size: 12px;
-        font-weight: 700;
-        color: #6b7280;
-      }
-    }
+    :root { --bg:#f6f7f9; --panel:#fff; --text:#1f2937; --muted:#667085; --line:#d9dee8; --accent:#0f766e; --accent-soft:#e7f7f4; --bad:#b42318; --bad-soft:#fff0ed; --warn:#9a6700; --warn-soft:#fff7d6; --code:#111827; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font-family:"Microsoft JhengHei","PingFang TC",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; line-height:1.65; }
+    main { width:min(1080px, calc(100% - 32px)); margin:32px auto 56px; }
+    h1 { margin:0 0 8px; font-size:clamp(28px,4vw,42px); line-height:1.2; letter-spacing:0; }
+    h2 { margin:0 0 14px; font-size:22px; letter-spacing:0; }
+    h3 { margin:20px 0 8px; font-size:17px; letter-spacing:0; }
+    p { margin:8px 0; }
+    .lead { margin:0 0 24px; color:var(--muted); font-size:17px; }
+    .section { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:24px; margin-top:18px; }
+    .note { padding:12px 14px; border-radius:8px; background:var(--warn-soft); color:var(--warn); border:1px solid #f4d35e; margin-top:12px; }
+    .ok-box,.bad-box { padding:14px 16px; border-radius:8px; margin-top:14px; font-weight:700; }
+    .ok-box { background:var(--accent-soft); color:var(--accent); border:1px solid #8fd9cd; }
+    .bad-box { background:var(--bad-soft); color:var(--bad); border:1px solid #ffb4a8; }
+    code,pre { font-family:Consolas,"Courier New",monospace; }
+    pre { overflow:auto; background:var(--code); color:#f9fafb; border-radius:8px; padding:16px; font-size:14px; line-height:1.55; tab-size:2; }
+    .formula { display:grid; grid-template-columns:repeat(8,minmax(48px,1fr)); gap:8px; margin-top:12px; }
+    .formula div { text-align:center; border:1px solid var(--line); border-radius:8px; padding:10px 6px; background:#fbfcfe; min-height:72px; }
+    .formula strong { display:block; font-size:18px; }
+    .input-row { display:flex; gap:12px; align-items:center; margin-top:12px; }
+    input { width:100%; height:46px; border:1px solid #aeb7c7; border-radius:8px; padding:0 14px; font-size:20px; letter-spacing:0; outline:none; }
+    input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(15,118,110,.14); }
+    button { height:46px; border:0; border-radius:8px; background:var(--accent); color:#fff; padding:0 18px; font-size:15px; font-weight:700; cursor:pointer; white-space:nowrap; }
+    table { width:100%; border-collapse:collapse; margin-top:14px; font-size:15px; }
+    th,td { border-bottom:1px solid var(--line); padding:10px 8px; text-align:left; vertical-align:top; }
+    th { color:var(--muted); font-weight:700; background:#fbfcfe; }
+    .muted { color:var(--muted); }
+    .pill { display:inline-flex; align-items:center; min-height:28px; border-radius:999px; padding:2px 10px; background:#edf1f7; color:#334155; font-weight:700; font-size:14px; }
+    @media (max-width:760px) { main { width:min(100% - 20px,1080px); margin-top:20px; } .section { padding:18px; } .formula { grid-template-columns:repeat(4,minmax(0,1fr)); } .input-row { flex-direction:column; align-items:stretch; } }
   </style>
 </head>
 <body>
-  <main class="container">
-    <section class="header">
-      <h1>ASP.NET Core MVC 轉 Angular 培訓規劃</h1>
-      <p>
-        本規劃目標是讓同事先透過線上資源建立 Angular 基礎，再透過現有專案理解 MVC 與 Angular 的差異，
-        最後以小型 PoC 實作作為後續工時評估依據。
-      </p>
+  <main>
+    <h1>統一編號驗證說明</h1>
+    <p class="lead">這份頁面用白話說明專案中的統一編號驗證規則，也可以直接輸入 8 碼統編，即時查看是否符合規則。</p>
+
+    <section class="section">
+      <h2>簡單說</h2>
+      <p>統一編號不是只檢查「是不是 8 碼數字」。它還會用一組固定權重做計算，確認這 8 碼是不是符合統一編號的檢核規則。</p>
+      <p>固定權重是：</p>
+      <div class="formula" aria-label="統一編號固定權重">
+        <div><span>第 1 碼</span><strong>1</strong></div><div><span>第 2 碼</span><strong>2</strong></div><div><span>第 3 碼</span><strong>1</strong></div><div><span>第 4 碼</span><strong>2</strong></div>
+        <div><span>第 5 碼</span><strong>1</strong></div><div><span>第 6 碼</span><strong>2</strong></div><div><span>第 7 碼</span><strong>4</strong></div><div><span>第 8 碼</span><strong>1</strong></div>
+      </div>
     </section>
 
-    <section class="card">
-      <table>
-        <thead>
-          <tr>
-            <th>階段</th>
-            <th>天數</th>
-            <th>方式</th>
-            <th>目標</th>
-            <th>學習重點</th>
-            <th>產出</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td data-label="階段" class="phase">1. Angular 自學</td>
-            <td data-label="天數"><span class="days">1-3 天</span></td>
-            <td data-label="方式">同事自行利用線上資源學習</td>
-            <td data-label="目標">先理解 Angular 基本觀念，不要求精通</td>
-            <td data-label="學習重點">
-              Component、Template、Binding、Routing、Service、HttpClient、Form、Observable 基礎
-            </td>
-            <td data-label="產出" class="output">能看懂 Angular 專案結構，並做出簡單頁面</td>
-          </tr>
-
-          <tr>
-            <td data-label="階段" class="phase">2. MVC vs Angular 對照說明</td>
-            <td data-label="天數"><span class="days">1 天</span></td>
-            <td data-label="方式">由你使用現有專案進行講解</td>
-            <td data-label="目標">讓同事理解舊專案轉 Angular 時的主要差異</td>
-            <td data-label="學習重點">
-              .cshtml 對應 Component、ViewBag / Model 對應 State、jQuery AJAX 對應 HttpClient、PartialView 對應 Component / Modal、Controller 對應 API
-            </td>
-            <td data-label="產出" class="output">一份轉換對照筆記</td>
-          </tr>
-
-          <tr>
-            <td data-label="階段" class="phase">3. 實作 PoC</td>
-            <td data-label="天數"><span class="days">1-2 天</span></td>
-            <td data-label="方式">你帶同事用現有專案改一個小功能</td>
-            <td data-label="目標">實際體驗一頁 MVC 如何轉成 Angular</td>
-            <td data-label="學習重點">
-              Component 拆分、API 串接、表單送出、錯誤處理、登入與權限初步處理
-            </td>
-            <td data-label="產出" class="output">一個可執行的 Angular 範例頁</td>
-          </tr>
-
-          <tr>
-            <td data-label="階段" class="phase">4. 工時評估</td>
-            <td data-label="天數"><span class="days">0.5-1 天</span></td>
-            <td data-label="方式">同事自行評估，你協助校正</td>
-            <td data-label="目標">根據 PoC 推估全案轉換時間</td>
-            <td data-label="學習重點">
-              頁面數量、功能複雜度、API 缺口、共用元件、測試與部署方式
-            </td>
-            <td data-label="產出" class="output">初版轉換工時表</td>
-          </tr>
-        </tbody>
-      </table>
+    <section class="section">
+      <h2>規則</h2>
+      <ol>
+        <li>必須是 8 碼數字。</li>
+        <li>8 個數字分別乘上固定權重 <code>1, 2, 1, 2, 1, 2, 4, 1</code>。</li>
+        <li>如果乘出來是兩位數，要拆成「十位數 + 個位數」。例如 <code>16</code> 要算成 <code>1 + 6 = 7</code>。</li>
+        <li>把所有結果加總。</li>
+        <li>如果總和可以被 <code>5</code> 整除，就通過。</li>
+      </ol>
+      <h3>第 7 碼是 7 的特殊規則</h3>
+      <p>第 7 碼不一定要是 <code>7</code>。只是當第 7 碼剛好是 <code>7</code> 時，會多一個放寬判斷：</p>
+      <p><span class="pill">總和 + 1</span> 如果可以被 <code>5</code> 整除，也算通過。</p>
     </section>
 
-    <div class="note">
-      建議重點：這不是單純語法轉換，而是前後端架構轉換。後端 Service、DAO、Model 多數可保留，
-      但 Razor View 與 jQuery 前端互動通常需要重新設計為 Angular Component 與 Service。
-    </div>
+    <section class="section">
+      <h2>專案中的程式碼</h2>
+      <p>目前專案的判斷主要在 <code>VerifyHelper.uniformNumber</code>：</p>
+      <pre><code>static uniformNumber(number: string) {
+    if (number === undefined)
+        return false;
+    number = number.toString();
+    if (number === "" || number.toString().length != 8)
+        return false;
+    let weight: number[] = [1, 2, 1, 2, 1, 2, 4, 1];
+    let sum = 0
+    for (let x = 0; x &lt; weight.length; x++) {
+        let j = Number(number[x]) * weight[x];
+        sum += Math.floor(j / 10) + (j % 10);
+    }
+    if (sum % 5 === 0)
+        return true;
+
+    if (number.substring(6, 1) === "7") {
+        if ((sum + 1) % 5 === 0)
+            return true;
+    }
+    return false;
+}</code></pre>
+      <div class="note">注意：如果目標是判斷第 7 碼，JavaScript 通常會寫成 <code>number[6] === "7"</code> 或 <code>number.substring(6, 7) === "7"</code>。上面專案原碼的 <code>substring(6, 1)</code> 看起來不像是正確取得第 7 碼。</div>
+    </section>
+
+    <section class="section">
+      <h2>即時驗證</h2>
+      <p class="muted">輸入 8 碼統一編號，下面會立即顯示計算過程與結果。</p>
+      <div class="input-row">
+        <input id="numberInput" type="text" inputmode="numeric" maxlength="8" placeholder="請輸入 8 碼統一編號" autocomplete="off" />
+        <button id="sampleButton" type="button">帶入範例</button>
+      </div>
+      <div id="result"></div>
+      <div id="detail"></div>
+    </section>
   </main>
+
+  <script>
+    const input = document.getElementById("numberInput");
+    const result = document.getElementById("result");
+    const detail = document.getElementById("detail");
+    const sampleButton = document.getElementById("sampleButton");
+    const weights = [1, 2, 1, 2, 1, 2, 4, 1];
+
+    function splitDigitSum(value) { return Math.floor(value / 10) + (value % 10); }
+
+    function validateUniformNumber(rawValue) {
+      const number = String(rawValue || "").trim();
+      const formatValid = /^[0-9]{8}$/.test(number);
+      if (!formatValid) return { number, formatValid, valid:false, rows:[], sum:0, seventhIsSeven:false, normalPass:false, specialPass:false };
+
+      let sum = 0;
+      const rows = number.split("").map((digitText, index) => {
+        const digit = Number(digitText);
+        const weight = weights[index];
+        const multiplied = digit * weight;
+        const digitSum = splitDigitSum(multiplied);
+        sum += digitSum;
+        return { position:index + 1, digit, weight, multiplied, digitSum };
+      });
+
+      const normalPass = sum % 5 === 0;
+      const seventhIsSeven = number[6] === "7";
+      const specialPass = seventhIsSeven && (sum + 1) % 5 === 0;
+      return { number, formatValid, valid:normalPass || specialPass, rows, sum, seventhIsSeven, normalPass, specialPass };
+    }
+
+    function render() {
+      input.value = input.value.replace(/\D/g, "").slice(0, 8);
+      const checked = validateUniformNumber(input.value);
+      if (!checked.number) { result.innerHTML = ""; detail.innerHTML = ""; return; }
+      if (!checked.formatValid) { result.innerHTML = '<div class="bad-box">尚未通過：請輸入完整 8 碼數字。</div>'; detail.innerHTML = ""; return; }
+
+      result.innerHTML = checked.valid
+        ? '<div class="ok-box">驗證通過：這組統一編號符合規則。</div>'
+        : '<div class="bad-box">驗證不通過：這組統一編號不符合規則。</div>';
+
+      const rowsHtml = checked.rows.map(row => {
+        const splitText = row.multiplied >= 10 ? `${Math.floor(row.multiplied / 10)} + ${row.multiplied % 10} = ${row.digitSum}` : `${row.digitSum}`;
+        return `<tr><td>第 ${row.position} 碼</td><td>${row.digit}</td><td>${row.weight}</td><td>${row.digit} × ${row.weight} = ${row.multiplied}</td><td>${splitText}</td></tr>`;
+      }).join("");
+
+      detail.innerHTML = `
+        <table><thead><tr><th>位置</th><th>數字</th><th>權重</th><th>相乘</th><th>拆位後結果</th></tr></thead><tbody>${rowsHtml}</tbody></table>
+        <h3>計算結果</h3>
+        <p>總和：<strong>${checked.sum}</strong></p>
+        <p>一般判斷：${checked.sum} % 5 ${checked.normalPass ? "= 0，通過" : "不是 0，不通過"}</p>
+        <p>第 7 碼是否為 7：<strong>${checked.seventhIsSeven ? "是" : "否"}</strong></p>
+        <p>特殊判斷：${checked.seventhIsSeven ? `(${checked.sum} + 1) % 5 ${checked.specialPass ? "= 0，通過" : "不是 0，不通過"}` : "第 7 碼不是 7，所以不套用特殊判斷"}</p>`;
+    }
+
+    input.addEventListener("input", render);
+    sampleButton.addEventListener("click", () => { input.value = "24536806"; render(); input.focus(); });
+  </script>
 </body>
 </html>
